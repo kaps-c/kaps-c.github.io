@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Celest (Ciel) Teng — Machine Learning Engineer, CS & AI at SUTD, Singapore. Projects in world models and LLM reliability.">
+<title>Celest (Ciel) Teng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column, F-pattern. Bold left-aligned titles, short bullets, generous whitespace. Contact up top, projects (the evidence) first. */
+:root{
+  --bg:#ffffff; --surface:#f4f6f8; --ink:#14181d; --muted:#5a6470; --line:#e2e6ea; --accent:#1f45d1; --accent-soft:#eaeefc; --ok:#13784f;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;padding-inline:clamp(16px,5vw,40px);padding-block:clamp(24px,6vw,64px)}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.col{max-width:760px;margin-inline:auto;display:grid;gap:clamp(48px,7vw,72px)}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* jump bar */
+.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;border-bottom:1px solid var(--line);margin-bottom:calc(-1 * clamp(24px,4vw,40px))}
+.jump nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.jump nav::-webkit-scrollbar{display:none}
+.jump nav a{font:500 14px/1 var(--sans);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
+.jump nav a:hover{color:var(--ink);background:var(--surface)}
+.jump nav a.active{color:var(--accent);background:var(--accent-soft)}
+section,header{scroll-margin-top:72px}
+
+/* header */
+header{display:grid;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.toggle{font:500 13px/1 var(--sans);background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
+.toggle:hover{color:var(--ink);border-color:var(--ink)}
+h1{font-size:clamp(36px,6vw,48px);line-height:1.05;font-weight:700;letter-spacing:-.02em;margin:0}
+.role{font-size:clamp(19px,2.4vw,22px);font-weight:500;margin:0;color:var(--ink)}
+.intro{margin:0;color:var(--muted);max-width:60ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
+.avail{color:var(--ok);font-weight:600}
+.avail::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:1px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--sans);text-decoration:none;padding:12px 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.primary:hover{filter:brightness(1.08)}
+.email{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:14px;color:var(--muted)}
+.email code{font:inherit;color:var(--ink);user-select:all}
+.email button{font:500 13px/1 var(--sans);padding:6px 10px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.status{color:var(--ok)}
+
+/* sections */
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0 0 24px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.project{display:grid;gap:14px;padding-block:28px;border-bottom:1px solid var(--line)}
+.project:first-of-type{padding-top:0}
+.project:last-child{border-bottom:0}
+h3{font-size:21px;font-weight:700;margin:0;line-height:1.25}
+.oneliner{margin:0;font-size:17px}
+.media{aspect-ratio:16/9;max-width:100%;border-radius:10px;background:var(--surface);border:1px dashed var(--line);display:grid;place-items:center;text-align:center;padding:16px;color:var(--muted);font-size:14px}
+.media strong{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+ul.points{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+ul.points li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px}
+ul.points b{font-weight:600}
+.todo{background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 6px}
+.plinks{display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:600;font-size:15px}
+.stack{font-family:var(--mono);font-size:13px;color:var(--muted)}
+@media (max-width:540px){ul.points li{grid-template-columns:1fr;gap:0}}
+
+.entry{display:grid;gap:4px;padding-block:16px;border-bottom:1px solid var(--line)}
+.entry:first-of-type{padding-top:0}
+.entry:last-child{border-bottom:0}
+.entry-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.entry-head b{font-size:18px}
+.when{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.entry ul{margin:6px 0 0;padding-left:20px}
+.entry.slot{border:1px dashed var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+
+dl.skills{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 16px;margin:0}
+dl.skills dt{font-weight:600}
+dl.skills dd{margin:0;color:var(--muted)}
+@media (max-width:540px){dl.skills{grid-template-columns:1fr;gap:0}dl.skills dd{margin-bottom:10px}}
+
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="col">
+  <div class="jump">
+    <nav aria-label="Jump to section">
+      <a href="#top">Contact</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+    </nav>
+    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+  </div>
+  <header id="top">
+    <h1>Celest (Ciel) Teng</h1>
+    <p class="role">Machine Learning Engineer · CS &amp; AI, SUTD</p>
+    <p class="intro">Final-year student building self-supervised world models and evaluation tools that make LLM features reliable.</p>
+    <ul class="meta">
+      <li class="avail">Open to full-time roles</li>
+      <li>Singapore</li>
+      <li>ML Engineer · AI Engineer · SWE</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary" href="#">Résumé (PDF)</a>
+      <a class="btn" href="#">GitHub</a>
+      <a class="btn" href="#">LinkedIn</a>
+    </div>
+    <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
+  </header>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <article class="project">
+      <h3>JEPA world model for Snake</h3>
+      <p class="oneliner">An agent that learns how Snake works in latent space and plans moves by imagining what happens next.</p>
+      <div class="media"><div><strong>Add: GIF of the agent playing</strong>8–10 seconds, looping</div></div>
+      <ul class="points">
+        <li><b>Problem</b><span>Pixel-level world models spend capacity on detail that doesn't matter for decisions.</span></li>
+        <li><b>Approach</b><span>Joint-embedding predictive architecture: predict future embeddings, then plan over imagined rollouts.</span></li>
+        <li><b>Result</b><span><span class="todo">Your number, e.g. avg score vs. random / pixel baseline</span></span></li>
+        <li><b>Engineering</b><span><span class="todo">e.g. tests, reproducible config, Dockerfile</span></span></li>
+      </ul>
+      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a><a href="#">Write-up ↗</a></div>
+      <div class="stack">PyTorch · JEPA · self-supervised learning · planning</div>
+    </article>
+
+    <article class="project">
+      <h3>LLM error validation system</h3>
+      <p class="oneliner">A validation layer that checks LLM outputs, classifies errors, and blocks bad answers before users see them.</p>
+      <div class="media"><div><strong>Add: screenshot of an output being flagged</strong>or a flow: input → model → checks → pass / block</div></div>
+      <ul class="points">
+        <li><b>Problem</b><span>LLM outputs fail silently, and teams find out from users.</span></li>
+        <li><b>Approach</b><span>Automated checks on every response, with error categories a team can act on.</span></li>
+        <li><b>Result</b><span><span class="todo">e.g. % of errors caught, false-positive rate, test set size</span></span></li>
+        <li><b>Engineering</b><span><span class="todo">e.g. deployed API, tests, CI</span></span></li>
+      </ul>
+      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a></div>
+      <div class="stack">Python · LLM APIs · evaluation</div>
+    </article>
+
+    <article class="project">
+      <h3>CX implementation</h3>
+      <p class="oneliner">A customer-experience system taken from requirements to a working deployment.</p>
+      <div class="media"><div><strong>Add: screenshot of the interface</strong>or a before / after</div></div>
+      <ul class="points">
+        <li><b>Problem</b><span><span class="todo">What was broken for the customer?</span></span></li>
+        <li><b>Approach</b><span><span class="todo">What you built, and your part in it</span></span></li>
+        <li><b>Result</b><span><span class="todo">Users, time saved, adoption</span></span></li>
+        <li><b>Engineering</b><span><span class="todo">Deployment, stack, team size</span></span></li>
+      </ul>
+      <div class="plinks"><a href="#">Case study ↗</a></div>
+      <div class="stack">Add stack</div>
+    </article>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="entry slot">
+      <div class="entry-head"><b>Role · Company</b><span class="when">Mon YYYY – Mon YYYY</span></div>
+      <ul><li>What you shipped, with a number</li><li>One more result</li></ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head"><b>Singapore University of Technology &amp; Design</b><span class="when">20XX – 20XX</span></div>
+      <span>B.Eng Computer Science &amp; AI</span>
+      <ul><li>Coursework: computer vision (U-Net, YOLO, ViT, Swin), deep learning, NLP</li></ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt><dd>Python, SQL, Java, JavaScript</dd>
+      <dt>Machine learning</dt><dd>PyTorch, CNNs, Transformers, self-supervised learning</dd>
+      <dt>LLMs &amp; NLP</dt><dd>Prompt engineering, LLM evaluation, NER / CRF</dd>
+      <dt>Engineering</dt><dd>REST APIs, OOP, Git</dd>
+    </dl>
+  </section>
+
+  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+</div>
+
+<script>
+const root=document.documentElement,btn=document.getElementById('theme-toggle');
+const current=()=>root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const show=()=>btn.textContent=current()==='dark'?'Light mode':'Dark mode';
+try{const s=localStorage.getItem('c-theme');if(s)root.dataset.theme=s}catch(e){}
+show();
+btn.addEventListener('click',()=>{const n=current()==='dark'?'light':'dark';root.dataset.theme=n;show();try{localStorage.setItem('c-theme',n)}catch(e){}});
+// highlight the section in view
+const links=[...document.querySelectorAll('.jump nav a')];
+const targets=links.map(a=>document.querySelector(a.getAttribute('href')));
+function mark(){
+  let i=0;targets.forEach((t,k)=>{if(t.getBoundingClientRect().top<120)i=k});
+  if(innerHeight+scrollY>=document.body.scrollHeight-4)i=targets.length-1;
+  links.forEach((a,k)=>a.classList.toggle('active',k===i));
+}
+addEventListener('scroll',mark,{passive:true});mark();
+document.getElementById('copy-mail').addEventListener('click',()=>{
+  const st=document.getElementById('copy-status');
+  const fb=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('mail'));const s=getSelection();s.removeAllRanges();s.addRange(r);st.textContent='Selected, press Ctrl/⌘+C';};
+  try{navigator.clipboard.writeText('tengcelest@gmail.com').then(()=>st.textContent='Copied',fb)}catch(e){fb()}
+});
+</script>
+</body>
+</html>
