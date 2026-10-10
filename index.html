@@ -1,10 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Celest (Ciel) Teng — Machine Learning Engineer, CS & AI at SUTD, Singapore. Projects in world models and LLM reliability.">
-<title>Celest (Ciel) Teng</title>
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>Celest Teng · AI &amp; Data</title>
+<meta name="description" content="Celest Teng — Computer Science and Design graduate, working across applied AI, model evaluation and data. Explore selected projects and experience.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -19,9 +15,6 @@
 :root[data-theme="dark"]{--bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0; color-scheme:dark}
 
 *{box-sizing:border-box}
-body{margin:0}
-img{max-width:100%}
-[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;padding-inline:clamp(16px,5vw,40px);padding-block:clamp(24px,6vw,64px)}
 a{color:var(--accent);text-underline-offset:3px}
@@ -92,14 +85,21 @@ dl.skills dd{margin:0;color:var(--muted)}
 
 footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-</style>
-</head>
-<body>
 
-<div class="col">
+.project-meta{display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap}
+.project-visual{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:28px 24px;margin:4px 0;font-size:14px;text-align:center}
+.project-visual>span:not(.flow-arrow){flex:1}.flow-arrow{color:var(--accent);font-size:22px}
+.project details{border-top:1px solid var(--line);padding-top:14px}.project summary{font-size:15px;color:var(--accent);font-weight:600;cursor:pointer;width:fit-content}.detail-body{color:var(--muted);font-size:16px}.detail-body p:last-child{margin-bottom:0}
+.experience-note{color:var(--muted);font-size:14px}.entry li{margin:8px 0}.skip{position:absolute;left:-10000px}.skip:focus{left:16px;top:16px;z-index:30;background:var(--bg);padding:12px}
+@media(max-width:540px){.jump{flex-wrap:wrap}.jump nav{flex:1 1 100%}.toggle{margin-left:auto}.project-visual{gap:8px;padding:20px 10px;font-size:12px}.project-meta .label{font-size:11px}section,header{scroll-margin-top:120px}.email{font-size:13px}}
+</style>
+
+</head><body>
+<a class="skip" href="#projects">Skip to projects</a>
+<main class="col">
   <div class="jump">
     <nav aria-label="Jump to section">
-      <a href="#top">Contact</a>
+      <a href="#top">Overview</a>
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
@@ -109,96 +109,87 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
   </div>
   <header id="top">
     <h1>Celest (Ciel) Teng</h1>
-    <p class="role">Machine Learning Engineer · CS &amp; AI, SUTD</p>
-    <p class="intro">Final-year student building self-supervised world models and evaluation tools that make LLM features reliable.</p>
+    <p class="role">Applied AI · Data · Engineering</p>
+    <p class="intro">Computer Science and Design graduate from SUTD, with an AI minor. My work spans computer vision, model evaluation and an AI summarisation subsystem deployed in an industry capstone.</p>
     <ul class="meta">
       <li class="avail">Open to full-time roles</li>
       <li>Singapore</li>
-      <li>ML Engineer · AI Engineer · SWE</li>
+      <li>AI / ML · Data · Software</li>
     </ul>
     <div class="actions">
-      <a class="btn primary" href="#">Résumé (PDF)</a>
-      <a class="btn" href="#">GitHub</a>
-      <a class="btn" href="#">LinkedIn</a>
+      <a class="btn primary" href="Celest-Teng-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+      <a class="btn" href="https://github.com/kaps-c" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="mailto:tengcelest@gmail.com">Get in touch ↗</a>
     </div>
-    <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
+    <div class="email"><span>Email</span><a id="mail" href="mailto:tengcelest@gmail.com">tengcelest@gmail.com</a><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
   </header>
 
   <section id="projects">
-    <h2>Projects</h2>
-
+    <h2>Selected projects</h2>
     <article class="project">
-      <h3>JEPA world model for Snake</h3>
-      <p class="oneliner">An agent that learns how Snake works in latent space and plans moves by imagining what happens next.</p>
-      <div class="media"><div><strong>Add: GIF of the agent playing</strong>8–10 seconds, looping</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span>Pixel-level world models spend capacity on detail that doesn't matter for decisions.</span></li>
-        <li><b>Approach</b><span>Joint-embedding predictive architecture: predict future embeddings, then plan over imagined rollouts.</span></li>
-        <li><b>Result</b><span><span class="todo">Your number, e.g. avg score vs. random / pixel baseline</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">e.g. tests, reproducible config, Dockerfile</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a><a href="#">Write-up ↗</a></div>
-      <div class="stack">PyTorch · JEPA · self-supervised learning · planning</div>
+      <div class="project-meta"><span class="label">Industry capstone · CC+</span><span class="when">Aug 2025 – May 2026</span></div>
+      <h3>Customer feedback, turned into weekly insights</h3>
+      <p class="oneliner">An AI summarisation subsystem for a customer-experience platform delivered to a B2B construction company.</p>
+      <div class="project-visual" aria-label="Workflow: customer feedback, AI summarisation, structured weekly business insights"><span>WhatsApp<br>Forms · Site visits</span><span class="flow-arrow" aria-hidden="true">→</span><span>AI summarisation</span><span class="flow-arrow" aria-hidden="true">→</span><span>Structured<br>weekly insights</span></div>
+      <ul class="points"><li><b>My role</b><span>Owned the AI summarisation track from model evaluation through deployment and platform integration.</span></li><li><b>Evaluation</b><span>Compared 8 configurations spanning extractive methods, transformer models, GPT-4o-mini and Claude.</span></li><li><b>Delivered</b><span>A structured-prompt Claude pipeline augmented with NLP-derived signals, integrated into the production platform.</span></li></ul>
+      <details><summary>Approach &amp; engineering details</summary><div class="detail-body"><p>Customer feedback arrived through WhatsApp, forms and site visits. The summarisation subsystem transformed that feedback into structured weekly business insights.</p><p>I designed a provider-agnostic evaluation framework to compare summarisation approaches, then built and deployed the selected pipeline as part of the wider CC+ platform.</p><p>My ownership was the AI summarisation subsystem within the team’s customer-experience platform.</p></div></details>
+      <div class="stack">LLM evaluation · Prompt engineering · NLP · Platform integration</div>
     </article>
-
     <article class="project">
-      <h3>LLM error validation system</h3>
-      <p class="oneliner">A validation layer that checks LLM outputs, classifies errors, and blocks bad answers before users see them.</p>
-      <div class="media"><div><strong>Add: screenshot of an output being flagged</strong>or a flow: input → model → checks → pass / block</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span>LLM outputs fail silently, and teams find out from users.</span></li>
-        <li><b>Approach</b><span>Automated checks on every response, with error categories a team can act on.</span></li>
-        <li><b>Result</b><span><span class="todo">e.g. % of errors caught, false-positive rate, test set size</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">e.g. deployed API, tests, CI</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a></div>
-      <div class="stack">Python · LLM APIs · evaluation</div>
+      <div class="project-meta"><span class="label">NLP · Project leader</span><span class="when">Aug – Dec 2025</span></div>
+      <h3>Understanding GPT-2 across 15 languages</h3>
+      <p class="oneliner">A multilingual evaluation and interpretability study examining how tokenisation affects cross-lingual transfer.</p>
+      <ul class="points"><li><b>My role</b><span>Led the evaluation and designed experiments across zero-shot, per-language and multilingual fine-tuning settings.</span></li><li><b>Finding</b><span>Developed tokenizer fertility metrics and identified token fragmentation as a major bottleneck in multilingual generalisation.</span></li><li><b>Evidence</b><span>A linear probing classifier achieved 94% tone-classification accuracy within the study.</span></li></ul>
+      <details><summary>Inside the evaluation</summary><div class="detail-body"><p>The study combined performance evaluation with attention entropy, head dispersion, t-SNE representation visualisation and a multilingual error taxonomy.</p><p>The 94% result refers specifically to the study’s tone-classification probe, rather than overall multilingual language-model performance.</p></div></details>
+      <div class="stack">GPT-2 · Cross-lingual evaluation · Tokenisation · Interpretability</div>
     </article>
-
     <article class="project">
-      <h3>CX implementation</h3>
-      <p class="oneliner">A customer-experience system taken from requirements to a working deployment.</p>
-      <div class="media"><div><strong>Add: screenshot of the interface</strong>or a before / after</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span><span class="todo">What was broken for the customer?</span></span></li>
-        <li><b>Approach</b><span><span class="todo">What you built, and your part in it</span></span></li>
-        <li><b>Result</b><span><span class="todo">Users, time saved, adoption</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">Deployment, stack, team size</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Case study ↗</a></div>
-      <div class="stack">Add stack</div>
+      <div class="project-meta"><span class="label">LLMs · Software security</span><span class="when">Jan – May 2026</span></div>
+      <h3>Structured vulnerability repair for C</h3>
+      <p class="oneliner">Evaluating repair pipelines that combine localisation, classification and retrieval signals with open-weight language models.</p>
+      <ul class="points"><li><b>My work</b><span>Built evaluation infrastructure for the VulnLoc and SAN2VULN benchmarks.</span></li><li><b>Engineering</b><span>Dataset extraction, exploit-verification workflows, pass@k evaluation and distributed execution tooling.</span></li></ul>
+      <details><summary>What the project examined</summary><div class="detail-body"><p>The project evaluated how structured vulnerability information could support automated C vulnerability remediation. My work included the infrastructure needed to run and assess repair experiments.</p></div></details>
+      <div class="stack">Open-weight LLMs · Vulnerability repair · Benchmarking · Evaluation infrastructure</div>
+    </article>
+    <article class="project">
+      <div class="project-meta"><span class="label">Representation learning</span><span class="when">Jan – May 2026</span></div>
+      <h3>A JEPA-style world model for Snake</h3>
+      <p class="oneliner">Investigating latent-state dynamics for long-horizon planning tasks.</p>
+      <ul class="points"><li><b>My work</b><span>Investigated representation-learning and evaluation pipelines for a JEPA-style world model.</span></li></ul>
+      <div class="stack">JEPA · Representation learning · World models · Planning</div>
     </article>
   </section>
 
   <section id="experience">
     <h2>Experience</h2>
-    <div class="entry slot">
-      <div class="entry-head"><b>Role · Company</b><span class="when">Mon YYYY – Mon YYYY</span></div>
-      <ul><li>What you shipped, with a number</li><li>One more result</li></ul>
+    <div class="entry">
+      <div class="entry-head"><b>ProfilePrint</b><span class="when">May – Sep 2025</span></div>
+      <div>Data Science / Computer Vision Intern</div><div class="experience-note">SGInnovate’s Summation Programme</div>
+      <ul><li>Migrated and refactored legacy deep-learning models to PyTorch for modular experimentation and hyperparameter tuning.</li><li>Developed and evaluated weakly supervised spectroscopy-based defect detection using multi-instance learning and embedding analysis on sparse industrial data.</li><li>Adapted the non-visual defect modelling pipeline for Honduras using the existing Brazil workflow as a reference.</li><li>Communicated experimental findings, modelling trade-offs and recommendations to technical stakeholders.</li></ul>
     </div>
   </section>
 
   <section id="education">
     <h2>Education</h2>
     <div class="entry">
-      <div class="entry-head"><b>Singapore University of Technology &amp; Design</b><span class="when">20XX – 20XX</span></div>
-      <span>B.Eng Computer Science &amp; AI</span>
-      <ul><li>Coursework: computer vision (U-Net, YOLO, ViT, Swin), deep learning, NLP</li></ul>
+      <div class="entry-head"><b>Singapore University of Technology &amp; Design</b><span class="when">Sep 2022 – May 2026</span></div>
+      <span>B.Eng (Computer Science and Design), Honours with Merit</span>
+      <ul><li>Minor in Artificial Intelligence</li><li>Track: Data Analytics, Visual Analytics and Computing</li><li>AY2025 Yangzheng Foundation Study Award</li></ul>
     </div>
   </section>
 
   <section id="skills">
     <h2>Skills</h2>
     <dl class="skills">
-      <dt>Languages</dt><dd>Python, SQL, Java, JavaScript</dd>
-      <dt>Machine learning</dt><dd>PyTorch, CNNs, Transformers, self-supervised learning</dd>
-      <dt>LLMs &amp; NLP</dt><dd>Prompt engineering, LLM evaluation, NER / CRF</dd>
-      <dt>Engineering</dt><dd>REST APIs, OOP, Git</dd>
+      <dt>Languages</dt><dd>Python, SQL</dd>
+      <dt>Machine learning</dt><dd>PyTorch, CNNs, LSTMs, Transformers, multi-instance learning, weak supervision</dd>
+      <dt>LLMs &amp; NLP</dt><dd>HuggingFace Transformers, prompt engineering, cross-lingual evaluation, interpretability</dd>
+      <dt>Data &amp; tools</dt><dd>Pandas, NumPy, Scikit-learn, Ray Tune, Git</dd>
     </dl>
   </section>
 
-  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
-</div>
+  <footer><span>Celest Teng · Singapore</span><a href="mailto:tengcelest@gmail.com">Let’s get in touch ↗</a></footer>
+</main>
 
 <script>
 const root=document.documentElement,btn=document.getElementById('theme-toggle');
@@ -206,6 +197,7 @@ const current=()=>root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)'
 const show=()=>btn.textContent=current()==='dark'?'Light mode':'Dark mode';
 try{const s=localStorage.getItem('c-theme');if(s)root.dataset.theme=s}catch(e){}
 show();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",show);
 btn.addEventListener('click',()=>{const n=current()==='dark'?'light':'dark';root.dataset.theme=n;show();try{localStorage.setItem('c-theme',n)}catch(e){}});
 // highlight the section in view
 const links=[...document.querySelectorAll('.jump nav a')];
@@ -213,7 +205,7 @@ const targets=links.map(a=>document.querySelector(a.getAttribute('href')));
 function mark(){
   let i=0;targets.forEach((t,k)=>{if(t.getBoundingClientRect().top<120)i=k});
   if(innerHeight+scrollY>=document.body.scrollHeight-4)i=targets.length-1;
-  links.forEach((a,k)=>a.classList.toggle('active',k===i));
+  links.forEach((a,k)=>{a.classList.toggle('active',k===i);if(k===i)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
 }
 addEventListener('scroll',mark,{passive:true});mark();
 document.getElementById('copy-mail').addEventListener('click',()=>{
@@ -222,5 +214,5 @@ document.getElementById('copy-mail').addEventListener('click',()=>{
   try{navigator.clipboard.writeText('tengcelest@gmail.com').then(()=>st.textContent='Copied',fb)}catch(e){fb()}
 });
 </script>
-</body>
-</html>
+
+</body></html>
