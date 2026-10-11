@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.">
+<title>CC+ · Celest (Ciel) Teng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="col">
+  <div class="jump">
+    <nav aria-label="Site"><a href="./#projects">← All projects</a><a href="./#top">Contact</a></nav>
+    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+  </div>
+  <header class="page-head" id="top">
+    <span class="label">Applied LLMs · Production · SUTD Capstone with an industry partner · Team of 7 · Oct 2025 – Apr 2026</span>
+    <h1>CC+: AI summaries of customer feedback</h1>
+    <p class="oneliner">A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.</p>
+    <ul class="points"><li><b>Problem</b><span>Customer feedback lived in WhatsApp threads and people's heads, so problems went unnoticed until they cost a project.</span></li><li><b>Approach</b><span>Classify each message, then summarise the week per aspect with Claude, grounded in the classification signals.</span></li><li><b>Result</b><span>Deployed and handed over to the industry partner in April 2026. Cached weekly summaries load in under 5 seconds.</span></li><li><b>My role</b><span>Owned the summariser from research to production, set up CI/CD, and wrote all 13 handover documents.</span></li></ul>
+    <div class="plinks"><span class="muted">Under NDA, so no public code</span></div>
+  </header>
+  <article class="wu page">
+          <h4>The problem</h4>
+          <p>Most of the company's revenue comes from repeat orders, but feedback arrived through WhatsApp and phone calls and lived in individual employees' heads. Each account manager looked after dozens of customers, so problems could go unnoticed until they cost a project. The goal was to collect feedback in one place, make it measurable, and surface what needs action.</p>
+
+          <h4>How the system works</h4>
+          <p>Feedback arrives from WhatsApp, online forms and on-site visits. A classification engine, built by my AI teammate, tags each message by aspect (product, service, delivery or payment), sentiment, and whether it needs action. Every week my summariser turns that feedback into a short digest for each aspect, shown on a web dashboard and an Android app.</p>
+
+          <h4>The summariser</h4>
+          <ol>
+            <li>Fetch the week's messages along with their classification results.</li>
+            <li>Hand them to a Python worker, which computes signals for each aspect: message count, average sentiment and overall label.</li>
+            <li>Send the signals and raw messages to Claude with a fixed, structured prompt (temperature 0) that requires five sections.</li>
+            <li>Parse the response, store it in PostgreSQL, and serve the cached copy on page load.</li>
+          </ol>
+          <ul>
+            <li><strong>Process isolation.</strong> The Node.js backend runs the Python worker as a separate process, so several hundred MB of model weights never sit in the web server and a model crash can't take the API down.</li>
+            <li><strong>Caching and fallback.</strong> A scheduled job writes each week's summary once. Pages load the stored copy in under 5 seconds without calling the model. If the current week has no feedback, the dashboard shows the last non-empty week, clearly labelled as older.</li>
+            <li><strong>Production fixes.</strong> Real usage exposed database connection-pool exhaustion under concurrent requests, and an empty-week check that counted messages instead of content. I fixed both and added an admin-only regenerate button.</li>
+            <li><strong>CI/CD and handover.</strong> Cloud Build runs tests on every pull request and deploys on merge. I wrote all 13 handover documents, organised with the Diátaxis framework (tutorials, how-to guides, reference and explanation), including 22 tracked tech-debt items.</li>
+          </ul>
+
+          <h4>Alternatives considered</h4>
+          <p>The summariser went through three stages, each driven by how the previous one failed:</p>
+          <ol>
+            <li><strong>Extractive and abstractive models</strong> (BART, PEGASUS, FLAN-T5). Extraction produced disconnected fragments, BART and PEGASUS wrote in an overly formal register for construction-site feedback, and FLAN-T5 didn't hold the structure.</li>
+            <li><strong>GPT-4o-mini vs Claude.</strong> Claude scored higher on faithfulness and coverage, judged independently by GPT-4o and Gemini 1.5 Pro, and offered better quality for the cost at projected scale.</li>
+            <li><strong>Structured prompt plus classification signals.</strong> Passing the per-aspect numbers alongside the raw text gave the strongest results on every dimension, and is what shipped.</li>
+          </ol>
+          <p>The jump from an unstructured prompt to a structured, signal-grounded one was bigger than the difference between the two models.</p>
+
+          <h4>Evaluation</h4>
+          <p>I built a provider-agnostic evaluation tool that compares Claude and GPT models on the platform's tasks, with a router that sends each request to the right provider.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Task</th><th class="n">Samples</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Weekly summaries</td><td class="n">200</td><td>Valid output: Claude 100%, GPT 96.5%</td></tr>
+                <tr><td>Voice transcription</td><td class="n">30</td><td>Whisper-1 and faster-whisper both near-zero error; faster-whisper 2–4× faster locally</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Limitations</h4>
+          <ul>
+            <li>I designed an 8-condition benchmark with ablations that isolate the prompt and the signals, but only verified it on the first batch before handover. The production choice rests on the staged comparison above, not on a completed statistical benchmark.</li>
+            <li>Integration tests were scaffolded but not run, so coverage relies on unit tests and manual testing.</li>
+          </ul>
+        </article>
+  <nav class="pager" aria-label="More write-ups"><a href="vuln-repair.html"><span>← Previous</span>Repairing C vulnerabilities with small open LLMs</a><a href="multilingual-gpt2.html" style="text-align:right"><span>Next →</span>How far does English GPT-2 transfer? Multilingual NLI</a></nav>
+  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

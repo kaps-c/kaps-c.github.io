@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.">
+<title>Repairing C vulnerabilities with small open LLMs · Celest (Ciel) Teng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="col">
+  <div class="jump">
+    <nav aria-label="Site"><a href="./#projects">← All projects</a><a href="./#top">Contact</a></nav>
+    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+  </div>
+  <header class="page-head" id="top">
+    <span class="label">LLMs & evaluation · SUTD · Team of 5 · Apr 2026</span>
+    <h1>Repairing C vulnerabilities with small open LLMs</h1>
+    <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
+    <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
+    <div class="plinks"><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
+  </header>
+  <article class="wu page">
+          <h4>The problem</h4>
+          <p>The state of the art in vulnerability repair (SAN2PATCH) reaches 79.5% Pass@1, but it uses GPT-4o, the true location of the bug, and sanitizer crash logs. We asked a harder, more realistic question: how far can open 7B models get with only the raw function and <em>predicted</em> bug locations? The constraint isolates what structured ML signals add.</p>
+
+          <h4>How it works</h4>
+          <p>Three signals feed a structured few-shot prompt. A fault-localisation model scores each line, a classifier predicts the vulnerability type, and dense retrieval finds similar past bugs along with their fixes. An open model (llama3:8b, deepseek-coder:6.7b or mistral:7b, served locally with Ollama) writes a patch. The patch only counts if it compiles under AddressSanitizer and the proof-of-concept exploit no longer triggers.</p>
+
+          <h4>What I built</h4>
+          <ul>
+            <li><strong>Dense retrieval.</strong> CodeT5+ (220M) embeds about 150,000 vulnerable C functions from the MegaVul dataset. Embeddings are mean-pooled, L2-normalised and stored in an exact FAISS inner-product index, so search is exact cosine similarity. A query returns the 3 nearest vulnerable-and-fixed pairs in under 5 ms. The model loads lazily, and a missing index returns no examples instead of crashing, so retrieval is a safe optional signal.</li>
+            <li><strong>Evaluation harness.</strong> Extractors for VulnLoc (35 cases) and SAN2VULN (13 cases) pull each vulnerable function out of messy real repositories, handling merge commits, tag-based fixes and dead mirrors. A runner loops LLM → apply patch → ASAN compile → exploit → revert, and reports pass@k with per-case diagnostics.</li>
+            <li><strong>Correctness.</strong> I audited the harness, logged 8 bugs by severity and fixed the critical ones, including one that silently skipped cases and one that broke standalone runs. I wrote 34+ unit tests and 4 replication guides with exact commits and settings.</li>
+            <li><strong>Ablations.</strong> Flags switch each signal on or off, giving five configurations from no signals to all three, so each signal's contribution can be measured.</li>
+          </ul>
+
+          <h4>Alternatives considered</h4>
+          <p><strong>Exact vs approximate search.</strong> At 150,000 vectors, brute-force cosine search already runs in under 5 ms, so an approximate index would only have cost recall. <strong>Always-on vs adaptive retrieval.</strong> We shipped always-on retrieval, and the results show that was the wrong call.</p>
+
+          <h4>Results on Defects4C (52 CVEs, Pass@5)</h4>
+          <p class="aside">A teammate ran these through my harness.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Model</th><th>Signals</th><th class="n">Compiles</th><th class="n">Fixed</th><th class="n">Pass@5</th></tr></thead>
+              <tbody>
+                <tr><td>deepseek-coder:6.7b</td><td>none</td><td class="n">100.0%</td><td class="n">3</td><td class="n">5.8%</td></tr>
+                <tr><td>deepseek-coder:6.7b</td><td>location + type</td><td class="n">100.0%</td><td class="n">4</td><td class="n">7.7%</td></tr>
+                <tr class="bad"><td>deepseek-coder:6.7b</td><td>all three</td><td class="n c">92.3%</td><td class="n">1</td><td class="n">1.9%</td></tr>
+                <tr><td>llama3:8b</td><td>none</td><td class="n">100.0%</td><td class="n">7</td><td class="n">13.5%</td></tr>
+                <tr class="hl"><td>llama3:8b</td><td>location + type</td><td class="n">100.0%</td><td class="n">8</td><td class="n">15.4%</td></tr>
+                <tr class="bad"><td>llama3:8b</td><td>all three</td><td class="n c">96.2%</td><td class="n">8</td><td class="n">15.4%</td></tr>
+                <tr><td>mistral:7b</td><td>none</td><td class="n">100.0%</td><td class="n">2</td><td class="n">3.8%</td></tr>
+                <tr class="bad"><td>mistral:7b</td><td>all three</td><td class="n c">90.4%</td><td class="n">2</td><td class="n">3.8%</td></tr>
+              </tbody>
+              <caption>Pass@5 samples 5 patches at temperature 0.8 (seed 42). Highlighted: best result. Orange: compile rate fell when retrieval was added.</caption>
+            </table>
+          </div>
+          <ul>
+            <li><strong>The base model matters more than any signal.</strong> llama3:8b with no signals (13.5%) beat every deepseek and mistral configuration.</li>
+            <li><strong>Retrieval hurt.</strong> Adding retrieved examples lowered the compile rate for every model. The likely cause is that few-shot examples crowd a small model's context and push the target function out of focus.</li>
+            <li><strong>Knowing where the bug is wasn't enough.</strong> Given the true bug lines, the best model still fixed only 7.7% at Pass@1. Model capacity is the ceiling.</li>
+            <li><strong>Sampling matters for small models.</strong> Near-greedy Pass@1 sat at 0–1.9%. Sampling five candidates lifted the best result to 15.4%.</li>
+          </ul>
+
+          <h4>What I'd change</h4>
+          <ul>
+            <li>Judge a component on the end task, not in isolation. Retrieval met every one of its own targets and still made the pipeline worse. Next I'd only inject examples above a similarity threshold.</li>
+            <li>I ran VulnLoc and SAN2VULN myself but only reached partial results (around 14–17% on VulnLoc) before networking problems on our two-machine setup blocked a clean run. Only Defects4C is reported.</li>
+          </ul>
+        </article>
+  <nav class="pager" aria-label="More write-ups"><a href="snekboros.html"><span>← Previous</span>Snekboros: vision world models for Snake</a><a href="cc-plus.html" style="text-align:right"><span>Next →</span>CC+: AI summaries of customer feedback</a></nav>
+  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

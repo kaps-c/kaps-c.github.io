@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.">
+<title>How far does English GPT-2 transfer? Multilingual NLI · Celest (Ciel) Teng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="col">
+  <div class="jump">
+    <nav aria-label="Site"><a href="./#projects">← All projects</a><a href="./#top">Contact</a></nav>
+    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+  </div>
+  <header class="page-head" id="top">
+    <span class="label">NLP & interpretability · SUTD Natural Language Processing · Group project · Nov – Dec 2025</span>
+    <h1>How far does English GPT-2 transfer? Multilingual NLI</h1>
+    <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
+    <ul class="points"><li><b>Problem</b><span>How well does an English-trained GPT-2 handle 14 other languages, and what predicts how well it does?</span></li><li><b>Approach</b><span>Zero-shot tests on 15 XNLI languages, tokenizer fertility analysis, then per-language vs unified fine-tuning.</span></li><li><b>Result</b><span>Fertility predicts zero-shot accuracy (Spearman −0.818). Fine-tuning added 18–25 points.</span></li><li><b>My role</b><span>Ran the multilingual study and all of the extended analysis. Implementing GPT-2 was group work.</span></li></ul>
+    <div class="plinks"><span class="muted">Repository coming soon</span></div>
+  </header>
+  <article class="wu page">
+          <h4>Setup</h4>
+          <p>Natural language inference (NLI) asks whether a hypothesis follows from a premise, contradicts it, or is neutral, so chance is 33.3%. The group implemented GPT-2 small (attention, transformer blocks and the AdamW optimiser), framed NLI as predicting a single label token, and fine-tuned on English XNLI: 78.02% test accuracy at baseline and 82.28% after tuning. The course was taught by Prof. Wenxuan Zhang.</p>
+
+          <h4>What I did</h4>
+          <ul>
+            <li><strong>Zero-shot transfer.</strong> I ran the English-tuned model on all 15 XNLI languages. English scored 78.02%, and every other language landed between 35.87% and 45.55%, barely above chance.</li>
+            <li><strong>Fertility as a cheap predictor.</strong> Fertility is the number of subword tokens per word. A high value means the tokenizer barely knows the language. It ranges from 1.11 for English to 9.48 for Thai, and its rank correlation with zero-shot accuracy is −0.818.</li>
+            <li><strong>Choosing what to fine-tune.</strong> I picked Spanish, French, German and Swahili for low fertility and higher zero-shot scores. Swahili adds a language outside the Indo-European family.</li>
+            <li><strong>One model per language vs one for all.</strong> I fine-tuned a separate model for each language, and a single unified model on all five languages together.</li>
+          </ul>
+          <figure>
+            <div class="chart-key"><span><i style="background:var(--chart-ref)"></i>Zero-shot</span><span><i style="background:var(--chart-1)"></i>Per-language model</span><span><i style="background:var(--chart-2)"></i>One unified model</span></div>
+            <div class="vchart" role="img" aria-label="Accuracy by language: German 41.5, 63.9, 61.5. Spanish 45.6, 63.5, 64.6. French 40.4, 65.9, 62.9. Swahili 38.2, 58.0, 56.5.">
+              <div class="vaxis"><span style="--t:0">0</span><span style="--t:20">20</span><span style="--t:40">40</span><span style="--t:60">60</span></div>
+              <div class="vplot">
+                <span class="gl" style="--t:20"></span><span class="gl" style="--t:40"></span><span class="gl" style="--t:60"></span>
+                <span class="chance"><span>chance</span></span>
+                <div class="vg"><i style="--v:41.52" title="German, zero-shot: 41.52%"></i><i class="pl" style="--v:63.86" title="German, per-language: 63.86%"></i><i class="un" style="--v:61.45" title="German, unified: 61.45%"></i></div>
+                <div class="vg"><i style="--v:45.55" title="Spanish, zero-shot: 45.55%"></i><i class="pl" style="--v:63.45" title="Spanish, per-language: 63.45%"></i><i class="un" style="--v:64.58" title="Spanish, unified: 64.58%"></i></div>
+                <div class="vg"><i style="--v:40.38" title="French, zero-shot: 40.38%"></i><i class="pl" style="--v:65.86" title="French, per-language: 65.86%"></i><i class="un" style="--v:62.85" title="French, unified: 62.85%"></i></div>
+                <div class="vg"><i style="--v:38.18" title="Swahili, zero-shot: 38.18%"></i><i class="pl" style="--v:58.03" title="Swahili, per-language: 58.03%"></i><i class="un" style="--v:56.47" title="Swahili, unified: 56.47%"></i></div>
+              </div>
+              <div class="vnames"><span>German</span><span>Spanish</span><span>French</span><span>Swahili</span></div>
+            </div>
+            <figcaption><b>NLI accuracy (%) before and after fine-tuning.</b> Exact values are in the table below.</figcaption>
+          </figure>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Language</th><th class="n">Fertility</th><th class="n">Zero-shot</th><th class="n">Per-language</th><th class="n">Unified</th></tr></thead>
+              <tbody>
+                <tr><td>German</td><td class="n">2.10</td><td class="n">41.52</td><td class="n">63.86</td><td class="n">61.45</td></tr>
+                <tr><td>Spanish</td><td class="n">1.83</td><td class="n">45.55</td><td class="n">63.45</td><td class="n">64.58</td></tr>
+                <tr><td>French</td><td class="n">1.75</td><td class="n">40.38</td><td class="n">65.86</td><td class="n">62.85</td></tr>
+                <tr><td>Swahili</td><td class="n">2.08</td><td class="n">38.18</td><td class="n">58.03</td><td class="n">56.47</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The single unified model came within about 3 points of four separate models and beat the Spanish one (64.58% vs 63.45%), which makes it the more practical choice.</p>
+
+          <h4>Looking inside the model</h4>
+          <ul>
+            <li><strong>Embeddings don't separate by language.</strong> A t-SNE of 3,000 sentence embeddings across 15 languages overlapped heavily (silhouette score 0.090).</li>
+            <li><strong>Attention changes with depth.</strong> Both layers attend heavily to the first token, but the deep layer adds more structured attention over content words.</li>
+            <li><strong>The signal is there, but prompting can't reach it.</strong> On a synthetic dataset of Singaporean-parent tone (care, disappointment, comparison and guilt), prompting GPT-2 scored 25.4%, which is chance for four classes. A linear probe on the same model's frozen embeddings scored 94.4%.</li>
+          </ul>
+          <figure>
+            <div class="media-frame"><img src="media/nlp-attention-shallow-deep.webp" width="1632" height="660" loading="lazy" alt="Two attention heatmaps for the same English premise and hypothesis: layer 0 is diffuse, layer 11 concentrates on early and content tokens."></div>
+            <figcaption><b>Attention in layer 0 (left) and layer 11 (right)</b>, head 0, for one English example.</figcaption>
+          </figure>
+
+          <h4>Limitations</h4>
+          <ul>
+            <li>A pragmatic-inference probe looked fine on accuracy (0.76), but its macro-F1 was 0.47 because it almost always predicted "contradiction". Accuracy alone would have hidden this.</li>
+            <li>The tone probe didn't transfer across languages: 97.7% in English but 25.0%, chance level, in Chinese.</li>
+            <li>The per-language numbers are best-checkpoint accuracies from the original notebook. The cleaned re-run will report every model on the same test split.</li>
+          </ul>
+        </article>
+  <nav class="pager" aria-label="More write-ups"><a href="cc-plus.html"><span>← Previous</span>CC+: AI summaries of customer feedback</a><a href="./#projects" style="text-align:right"><span>Back to</span>All projects</a></nav>
+  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
