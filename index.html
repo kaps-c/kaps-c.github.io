@@ -3,31 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Celest (Ciel) Teng — Machine Learning Engineer, CS & AI at SUTD, Singapore. Projects in world models and LLM reliability.">
+<meta name="description" content="Celest (Ciel) Teng: machine learning engineer in Singapore. Projects in self-supervised world models, LLM evaluation and production ML.">
 <title>Celest (Ciel) Teng</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one column, F-pattern. Bold left-aligned titles, short bullets, generous whitespace. Contact up top, projects (the evidence) first. */
+/* Layout: one text-first column. Understated name, skimmable project cards, full write-ups behind <details>. */
 :root{
   --bg:#ffffff; --surface:#f4f6f8; --ink:#14181d; --muted:#5a6470; --line:#e2e6ea; --accent:#1f45d1; --accent-soft:#eaeefc; --ok:#13784f;
+  --chart-1:#1f45d1; --chart-2:#eb6834; --chart-ref:#b4bcc6; --band:rgba(31,69,209,.10);
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0; color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0; color-scheme:dark}
+  --bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0;
+  --chart-1:#3987e5; --chart-2:#d95926; --chart-ref:#4a535e; --band:rgba(57,135,229,.16); color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216; --surface:#171b21; --ink:#e7eaee; --muted:#9aa4b0; --line:#262c34; --accent:#8fa5ff; --accent-soft:#1b2347; --ok:#5fd3a0;
+  --chart-1:#3987e5; --chart-2:#d95926; --chart-ref:#4a535e; --band:rgba(57,135,229,.16); color-scheme:dark}
 
 *{box-sizing:border-box}
 body{margin:0}
 img{max-width:100%}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;padding-inline:clamp(16px,5vw,40px);padding-block:clamp(24px,6vw,64px)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;padding-inline:clamp(16px,5vw,40px);padding-block:0 clamp(24px,6vw,64px)}
 a{color:var(--accent);text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 .col{max-width:760px;margin-inline:auto;display:grid;gap:clamp(48px,7vw,72px)}
-.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.col > *,section > *{min-width:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 
 /* jump bar */
 .jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;border-bottom:1px solid var(--line);margin-bottom:calc(-1 * clamp(24px,4vw,40px))}
@@ -36,21 +40,20 @@ a{color:var(--accent);text-underline-offset:3px}
 .jump nav a{font:500 14px/1 var(--sans);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
 .jump nav a:hover{color:var(--ink);background:var(--surface)}
 .jump nav a.active{color:var(--accent);background:var(--accent-soft)}
-section,header{scroll-margin-top:72px}
-
-/* header */
-header{display:grid;gap:18px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.toggle{font:500 13px/1 var(--sans);background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
+section,header,article{scroll-margin-top:72px}
+.toggle{font:500 13px/1 var(--sans);background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;white-space:nowrap}
 .toggle:hover{color:var(--ink);border-color:var(--ink)}
-h1{font-size:clamp(36px,6vw,48px);line-height:1.05;font-weight:700;letter-spacing:-.02em;margin:0}
-.role{font-size:clamp(19px,2.4vw,22px);font-weight:500;margin:0;color:var(--ink)}
-.intro{margin:0;color:var(--muted);max-width:60ch}
-.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
+
+/* header: understated name */
+header{display:grid;gap:14px;padding-top:clamp(40px,6vw,64px)}
+h1{font-size:26px;line-height:1.2;font-weight:600;letter-spacing:-.01em;margin:0}
+.role{font-size:16px;margin:0;color:var(--muted)}
+.intro{margin:4px 0 0;max-width:60ch;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
 .avail{color:var(--ok);font-weight:600}
 .avail::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:1px}
 .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--sans);text-decoration:none;padding:12px 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--sans);text-decoration:none;padding:11px 15px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 .btn:hover{border-color:var(--ink)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .btn.primary:hover{filter:brightness(1.08)}
@@ -60,30 +63,130 @@ h1{font-size:clamp(36px,6vw,48px);line-height:1.05;font-weight:700;letter-spacin
 .status{color:var(--ok)}
 
 /* sections */
-h2{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0 0 24px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
-.project{display:grid;gap:14px;padding-block:28px;border-bottom:1px solid var(--line)}
-.project:first-of-type{padding-top:0}
-.project:last-child{border-bottom:0}
-h3{font-size:21px;font-weight:700;margin:0;line-height:1.25}
-.oneliner{margin:0;font-size:17px}
-.media{aspect-ratio:16/9;max-width:100%;border-radius:10px;background:var(--surface);border:1px dashed var(--line);display:grid;place-items:center;text-align:center;padding:16px;color:var(--muted);font-size:14px}
-.media strong{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
-ul.points{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
-ul.points li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px}
-ul.points b{font-weight:600}
-.todo{background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 6px}
-.plinks{display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:600;font-size:15px}
-.stack{font-family:var(--mono);font-size:13px;color:var(--muted)}
-@media (max-width:540px){ul.points li{grid-template-columns:1fr;gap:0}}
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0 0 8px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.sec-note{margin:0 0 24px;color:var(--muted);font-size:15px}
+h3{font-size:22px;font-weight:700;margin:0;line-height:1.25;text-wrap:balance}
 
-.entry{display:grid;gap:4px;padding-block:16px;border-bottom:1px solid var(--line)}
+/* featured project card */
+.project{display:grid;gap:14px;padding-block:32px;border-bottom:1px solid var(--line)}
+.project:first-of-type{padding-top:8px}
+.project > *{min-width:0}
+.oneliner{margin:0;font-size:17px}
+.result{margin:0;padding:12px 14px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 8px 8px 0;font-size:16px}
+.result b{font-variant-numeric:tabular-nums}
+.myrole{margin:0;font-size:16px}
+.myrole strong{font-weight:600}
+.nda{margin:0;font-size:14px;color:var(--muted)}
+.plinks{display:flex;flex-wrap:wrap;gap:6px 18px;font-weight:600;font-size:15px}
+.plinks .muted{color:var(--muted);font-weight:400}
+.stack{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* write-up */
+details.writeup{border:1px solid var(--line);border-radius:10px}
+details.writeup > summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.writeup > summary::-webkit-details-marker{display:none}
+details.writeup > summary::after{content:"+";font:500 20px/1 var(--mono);color:var(--muted)}
+details.writeup[open] > summary::after{content:"−"}
+details.writeup > summary:hover{background:var(--surface);border-radius:10px}
+.wu{padding:4px 18px 20px;display:grid;gap:14px;border-top:1px solid var(--line)}
+.wu > *{min-width:0}
+.wu h4{font-size:17px;font-weight:700;margin:14px 0 0}
+.wu p{margin:0}
+.wu ul,.wu ol{margin:0;padding-left:22px;display:grid;gap:8px}
+.wu .aside{color:var(--muted);font-size:15px}
+
+/* figures */
+figure{margin:0;display:grid;gap:8px}
+figcaption{font-size:14px;color:var(--muted);line-height:1.5}
+figcaption b{color:var(--ink);font-weight:600}
+.media-frame{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;overflow:hidden}
+.media-frame img{display:block;width:100%;height:auto}
+.video-wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.video-wrap video{width:224px;max-width:100%;aspect-ratio:1;image-rendering:pixelated;border-radius:8px;background:#000;display:block}
+.video-wrap figcaption{flex:1 1 220px}
+
+/* flow diagram */
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:10px 0}
+.flow li{position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:14px;line-height:1.35;margin-right:26px;max-width:15rem}
+.flow li small{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.flow li:not(:last-child)::after{content:"→";position:absolute;right:-20px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px}
+.flow li.mine{border-color:var(--accent);background:var(--accent-soft)}
+.flow li.mine small{color:var(--accent)}
+.flow-legend{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.flow-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent)}
+@media (max-width:560px){.flow{flex-direction:column;gap:22px}.flow li{margin-right:0;max-width:none}.flow li:not(:last-child)::after{content:"↓";right:auto;left:16px;top:auto;bottom:-20px;transform:none}}
+
+/* horizontal bar chart */
+.hbars{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}
+.hbars li{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr) 3rem;gap:12px;align-items:center}
+.hbars .lbl{color:var(--ink);line-height:1.3}
+.hbars .lbl small{display:block;color:var(--muted);font-size:12px}
+.hbars .track{position:relative;height:14px}
+.hbars .track i{position:relative;display:block;height:100%;width:calc(var(--v) / var(--max,1) * 100%);background:var(--chart-ref);border-radius:0 4px 4px 0}
+.hbars li.mine .track i{background:var(--chart-1)}
+.hbars li.mine .lbl{font-weight:600}
+.hbars b{font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+.hbars.banded .track::before{content:"";position:absolute;top:-5px;bottom:-5px;left:calc(var(--b0) * 100%);width:calc((var(--b1) - var(--b0)) * 100%);background:var(--band);border-inline:1px dashed var(--chart-1)}
+.chart-key{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--muted)}
+.chart-key span{display:inline-flex;align-items:center;gap:6px}
+.chart-key i{display:inline-block;width:12px;height:12px;border-radius:3px}
+@media (max-width:480px){.hbars li{grid-template-columns:minmax(0,1fr) 3rem;row-gap:4px}.hbars .lbl{grid-column:1 / -1}}
+
+/* grouped vertical bars */
+.vchart{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:8px}
+.vaxis{position:relative;height:180px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.vaxis span{position:absolute;right:0;transform:translateY(50%);bottom:calc(var(--t) / 70 * 100%)}
+.vplot{position:relative;height:180px;border-bottom:1px solid var(--muted);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.vplot .gl{position:absolute;left:0;right:0;bottom:calc(var(--t) / 70 * 100%);border-top:1px solid var(--line)}
+.vplot .chance{position:absolute;left:0;right:0;bottom:calc(33.33 / 70 * 100%);border-top:1.5px dashed var(--muted);z-index:2}
+.vplot .chance span{position:absolute;right:0;top:-18px;font-size:11px;color:var(--muted);background:var(--bg);padding-inline:4px}
+.vg{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;gap:2px}
+.vg i{width:min(18px,28%);height:calc(var(--v) / 70 * 100%);border-radius:4px 4px 0 0;background:var(--chart-ref)}
+.vg i.pl{background:var(--chart-1)}
+.vg i.un{background:var(--chart-2)}
+.vnames{grid-column:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;text-align:center;font-size:13px}
+
+/* scatter */
+.scatter{width:100%;height:auto;display:block;font-family:var(--sans)}
+.scatter .grid{stroke:var(--line);stroke-width:1}
+.scatter .axis{stroke:var(--muted);stroke-width:1}
+.scatter .tick{fill:var(--muted);font-size:12px}
+.scatter .axlabel{fill:var(--muted);font-size:12.5px}
+.scatter .chance{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.scatter .note{fill:var(--muted);font-size:11.5px}
+.scatter .pt{fill:var(--chart-ref);stroke:var(--bg);stroke-width:2}
+.scatter .pt.sel{fill:var(--chart-1)}
+.scatter .plabel{fill:var(--ink);font-size:12.5px}
+
+/* tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:600;background:var(--surface)}
+td.n,th.n{text-align:right}
+tr:last-child td{border-bottom:0}
+tr.hl td{background:var(--accent-soft)}
+tr.bad td.n.c{color:var(--chart-2);font-weight:600}
+caption{caption-side:bottom;text-align:left;font-size:13px;color:var(--muted);padding:8px 10px}
+
+/* more projects */
+.more{list-style:none;margin:0;padding:0;display:grid}
+.more li{display:grid;gap:4px;padding-block:16px;border-bottom:1px solid var(--line)}
+.more li:last-child{border-bottom:0}
+.more .t{font-weight:600;font-size:17px}
+.more .m{font-size:14px;color:var(--muted)}
+.more p{margin:0}
+
+/* experience / education */
+.entry{display:grid;gap:4px;padding-block:18px;border-bottom:1px solid var(--line)}
 .entry:first-of-type{padding-top:0}
 .entry:last-child{border-bottom:0}
-.entry-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.entry-head{display:flex;justify-content:space-between;gap:4px 12px;flex-wrap:wrap;align-items:baseline}
 .entry-head b{font-size:18px}
 .when{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.entry ul{margin:6px 0 0;padding-left:20px}
-.entry.slot{border:1px dashed var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.entry .sub{color:var(--muted)}
+.entry p{margin:4px 0 0}
+.entry ul{margin:6px 0 0;padding-left:20px;display:grid;gap:6px}
 
 dl.skills{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 16px;margin:0}
 dl.skills dt{font-weight:600}
@@ -95,7 +198,6 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
 </style>
 </head>
 <body>
-
 <div class="col">
   <div class="jump">
     <nav aria-label="Jump to section">
@@ -107,10 +209,11 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
     </nav>
     <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
   </div>
+
   <header id="top">
     <h1>Celest (Ciel) Teng</h1>
     <p class="role">Machine Learning Engineer · SUTD, Class of 2026</p>
-    <p class="intro">SUTD graduate (May 2026) building self-supervised world models and evaluation tools that make LLM features reliable.</p>
+    <p class="intro">I build self-supervised models, evaluation pipelines for LLM systems, and the plumbing that gets ML into production.</p>
     <ul class="meta">
       <li class="avail">Open to full-time roles</li>
       <li>Singapore</li>
@@ -118,7 +221,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
     </ul>
     <div class="actions">
       <a class="btn primary" href="Celest-Teng-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
-      <a class="btn" href="#">GitHub</a>
+      <a class="btn" href="https://github.com/kaps-c" target="_blank" rel="noopener">GitHub</a>
       <a class="btn" href="#">LinkedIn</a>
     </div>
     <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
@@ -126,55 +229,389 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
 
   <section id="projects">
     <h2>Projects</h2>
+    <p class="sec-note">Four featured projects with full write-ups, then shorter ones. Team results are labelled as team results.</p>
 
-    <article class="project">
-      <h3>JEPA world model for Snake</h3>
-      <p class="oneliner">An agent that learns how Snake works in latent space and plans moves by imagining what happens next.</p>
-      <div class="media"><div><strong>Add: GIF of the agent playing</strong>8–10 seconds, looping</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span>Pixel-level world models spend capacity on detail that doesn't matter for decisions.</span></li>
-        <li><b>Approach</b><span>Joint-embedding predictive architecture: predict future embeddings, then plan over imagined rollouts.</span></li>
-        <li><b>Result</b><span><span class="todo">Your number, e.g. avg score vs. random / pixel baseline</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">e.g. tests, reproducible config, Dockerfile</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a><a href="#">Write-up ↗</a></div>
-      <div class="stack">PyTorch · JEPA · self-supervised learning · planning</div>
+    <!-- ===================== SNEKBOROS ===================== -->
+    <article class="project" id="snekboros">
+      <span class="label">Self-supervised learning · SUTD · Team of 4 · Apr 2026</span>
+      <h3>Snekboros: vision world models for Snake</h3>
+      <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
+      <p class="result"><b>Team result:</b> 0.89 completion on a 4×4 board, against 0.00 for a random policy and 1.00 for an oracle. <b>My 14×14 track:</b> raised a scratch-trained encoder's probe R² from 0.436 to 0.622, against a 0.927 pretrained ceiling.</p>
+      <p class="myrole"><strong>My role:</strong> I led the self-supervised representation work, including the collapse monitoring and phased training schedule used in the final paper, and ran a separate 14×14 transformer study.</p>
+      <figure>
+        <ul class="hbars" style="--max:1" aria-label="Completion rate on the 4×4 board">
+          <li><span class="lbl">Random policy</span><span class="track"><i style="--v:0"></i></span><b>0.00</b></li>
+          <li><span class="lbl">DINO-WM <small>frozen pretrained encoder</small></span><span class="track"><i style="--v:0"></i></span><b>0.00</b></li>
+          <li class="mine"><span class="lbl">Snekboros <small>team system</small></span><span class="track"><i style="--v:.89"></i></span><b>0.89</b></li>
+          <li><span class="lbl">Oracle planner <small>sees the true grid</small></span><span class="track"><i style="--v:1"></i></span><b>1.00</b></li>
+          <li><span class="lbl">Hamiltonian cycle <small>hand-designed</small></span><span class="track"><i style="--v:1"></i></span><b>1.00</b></li>
+        </ul>
+        <figcaption><b>Completion rate on a 4×4 board</b> (fraction of possible food eaten). Team result from the final report; single seed per row.</figcaption>
+      </figure>
+      <div class="plinks"><span class="muted">Final report available on request</span></div>
+      <div class="stack">PyTorch · JEPA · SIGReg · VICReg · ConvGRU · ViT · Optuna</div>
+
+      <details class="writeup">
+        <summary>Read the write-up</summary>
+        <div class="wu">
+          <h4>The problem</h4>
+          <p>Snake has simple rules, but one bad early move can trap the snake many steps later. That makes it a compact test of long-horizon planning, posed in OpenAI's 2018 Requests for Research. We made it harder: the agent sees only rendered pixels, never the grid state.</p>
+          <p>We used a JEPA-style objective (joint-embedding predictive architecture). Instead of predicting future pixels, the model predicts future <em>representations</em>, which avoids modelling pixel detail that doesn't matter for decisions. The catch is a known failure mode: the encoder can map every frame to nearly the same vector, which makes prediction trivially easy and the representation useless. This is called representation collapse, and most of my work was about detecting and preventing it.</p>
+
+          <h4>How the team system works</h4>
+          <ol class="flow" aria-label="Team system pipeline">
+            <li><small>Input</small>Rendered frame</li>
+            <li><small>Encoder</small>CNN → latent</li>
+            <li><small>World model</small>Action-conditioned ConvGRU, rolled forward 15 steps</li>
+            <li><small>Evaluator</small>Survival × food score</li>
+            <li><small>Planner</small>Best of 1,024 imagined move sequences</li>
+          </ol>
+          <p>At each step the planner samples 1,024 candidate move sequences, rolls each one forward inside the world model, scores them with the evaluator, and plays the first move of the best. This is model-predictive control in a learned latent space. SIGReg, a regulariser that pushes representations towards an isotropic Gaussian, guards against collapse.</p>
+
+          <h4>What I contributed to the final system</h4>
+          <ul>
+            <li><strong>Collapse monitoring.</strong> I added effective-rank tracking on the centred representations as a per-epoch training signal. When the rank drops, the run stops instead of wasting epochs. The final paper uses it as the system's collapse monitor.</li>
+            <li><strong>Phased training.</strong> Training all three components together from scratch was unstable and often collapsed within 10 epochs. I designed the schedule the paper uses: 20% of epochs on the encoder alone, 20% on the world model alone, then 60% jointly.</li>
+            <li><strong>Experiment standard.</strong> Every ablation had to ship with saved results, diagnostics and a paired analysis notebook before it was reported. The paper's five ablation tables went through this pipeline.</li>
+          </ul>
+
+          <h4>My own track: how close can a scratch-trained encoder get? (14×14 board)</h4>
+          <p>The team paper used a 4×4 board. In parallel I ran a study on a 14×14 board with transformer world models. At this size frames render at 224 px, which matches the input size of DINOv2, an encoder pretrained on ImageNet. That made a fair question possible: how close can an encoder trained from scratch on Snake get to a strong pretrained one?</p>
+          <p>I measured this with a linear probe: a ridge regression from frozen embeddings to the snake head's (x, y) position. Frozen DINOv2 sets the ceiling at R² 0.927. Before running anything, I fixed a pass band of ±0.05 around that ceiling so the target couldn't move afterwards.</p>
+          <figure>
+            <div class="chart-key"><span><i style="background:var(--chart-1)"></i>Scratch-trained JEPA encoder</span><span><i style="background:var(--band);outline:1px dashed var(--chart-1)"></i>Pre-registered pass band (±0.05)</span></div>
+            <ul class="hbars banded" style="--max:1;--b0:.877;--b1:.977" aria-label="Encoder probe R squared">
+              <li class="mine"><span class="lbl">Strict-JEPA baseline</span><span class="track"><i style="--v:.436"></i></span><b>0.436</b></li>
+              <li class="mine"><span class="lbl">+ asymmetric projector</span><span class="track"><i style="--v:.447"></i></span><b>0.447</b></li>
+              <li class="mine"><span class="lbl">+ projector + VICReg</span><span class="track"><i style="--v:.622"></i></span><b>0.622</b></li>
+              <li><span class="lbl">Frozen DINOv2 ViT-S/14 <small>ceiling</small></span><span class="track"><i style="--v:.927"></i></span><b>0.927</b></li>
+            </ul>
+            <figcaption><b>Encoder probe R² for the snake head's position</b> (joint x and y), at a matched 5-epoch budget.</figcaption>
+          </figure>
+          <ul>
+            <li><strong>The recipe closed about 38% of the gap but didn't reach the band.</strong> An asymmetric projector plus a VICReg variance–covariance penalty took the encoder from 0.436 to 0.622.</li>
+            <li><strong>Two ingredients are each essential.</strong> Removing the EMA target encoder, or the action input to the predictor, dropped the predictor's probe to 0.052 and 0.037. The rest of the setup wasn't the bottleneck: with a frozen DINOv2 encoder in the same scaffold, the predictor's probe reached 0.802.</li>
+            <li><strong>My own collapse alarm missed this.</strong> The effective-rank ratio stayed around 1.19 throughout, far above the 0.5 kill threshold. The embeddings still spanned many directions; they just encoded nothing useful. Rank tracking catches dimensional collapse but not informational collapse, so a probe has to be in the loop too.</li>
+          </ul>
+          <figure class="video-wrap">
+            <video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline width="224" height="224" aria-label="Snake moving around a 14 by 14 grid, growing as it eats green food"></video>
+            <figcaption><b>A 14×14 rollout used to score the JEPA model.</b> A Hamiltonian-cycle oracle moves the snake while the model predicts each next step. The clip ends at the 300-step cap.</figcaption>
+          </figure>
+
+          <h4>Alternatives considered: tuning on validation loss</h4>
+          <p>I first tuned the projector + VICReg recipe the usual way, with a 20-trial Optuna search minimising validation loss. Probing the trials told the opposite story: within the study, lower validation loss went with worse probe scores. The search's best trial scored R² 0.328, while a configuration found outside the search scored 0.622. The penalties left easy minima where representations looked well-behaved but encoded nothing. Since then I search on a downstream probe rather than training loss, and this finding fed into the team's move from VICReg to SIGReg.</p>
+
+          <h4>Limitations</h4>
+          <ul>
+            <li>Every ablation row is a single seed, so there are no error bars.</li>
+            <li>At 4×4, the DINO-WM baseline kept its pretrained encoder frozen. Fine-tuning it would have been a fairer comparison.</li>
+            <li>My 14×14 track didn't reach the pre-registered band, and time ran out before it could go into the submitted paper.</li>
+          </ul>
+        </div>
+      </details>
     </article>
 
-    <article class="project">
-      <h3>LLM error validation system</h3>
-      <p class="oneliner">A validation layer that checks LLM outputs, classifies errors, and blocks bad answers before users see them.</p>
-      <div class="media"><div><strong>Add: screenshot of an output being flagged</strong>or a flow: input → model → checks → pass / block</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span>LLM outputs fail silently, and teams find out from users.</span></li>
-        <li><b>Approach</b><span>Automated checks on every response, with error categories a team can act on.</span></li>
-        <li><b>Result</b><span><span class="todo">e.g. % of errors caught, false-positive rate, test set size</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">e.g. deployed API, tests, CI</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Live demo ↗</a><a href="#">Code ↗</a></div>
-      <div class="stack">Python · LLM APIs · evaluation</div>
+    <!-- ===================== VULN REPAIR ===================== -->
+    <article class="project" id="vuln-repair">
+      <span class="label">LLMs &amp; evaluation · SUTD · Team of 5 · Apr 2026</span>
+      <h3>Repairing C vulnerabilities with small open LLMs</h3>
+      <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
+      <p class="result"><b>15.4% of 52 real CVEs fixed</b> (Pass@5, llama3:8b, Defects4C), with no sanitizer logs and no given bug location. Every number comes from the evaluation harness I built.</p>
+      <p class="myrole"><strong>My role:</strong> I built the dense retrieval module and the full evaluation harness, and designed the ablation study.</p>
+      <figure>
+        <ol class="flow" aria-label="Repair pipeline">
+          <li><small>Input</small>Vulnerable C function</li>
+          <li><small>Signals</small>Bug location · vulnerability type</li>
+          <li class="mine"><small>Signal · my work</small>Dense retrieval of similar fixed bugs</li>
+          <li><small>Generate</small>Few-shot prompt → open 7B LLM</li>
+          <li class="mine"><small>Verify · my work</small>Patch → ASAN compile → exploit → pass@k</li>
+        </ol>
+        <div class="flow-legend"><i></i>My work</div>
+      </figure>
+      <div class="plinks"><span class="muted">Code in a team organisation on GitHub</span></div>
+      <div class="stack">Python · PyTorch · CodeT5+ · FAISS · Ollama · AddressSanitizer · FastAPI</div>
+
+      <details class="writeup">
+        <summary>Read the write-up</summary>
+        <div class="wu">
+          <h4>The problem</h4>
+          <p>The state of the art in vulnerability repair (SAN2PATCH) reaches 79.5% Pass@1, but it uses GPT-4o, the true location of the bug, and sanitizer crash logs. We asked a harder, more realistic question: how far can open 7B models get with only the raw function and <em>predicted</em> bug locations? The constraint isolates what structured ML signals add.</p>
+
+          <h4>How it works</h4>
+          <p>Three signals feed a structured few-shot prompt. A fault-localisation model scores each line, a classifier predicts the vulnerability type, and dense retrieval finds similar past bugs along with their fixes. An open model (llama3:8b, deepseek-coder:6.7b or mistral:7b, served locally with Ollama) writes a patch. The patch only counts if it compiles under AddressSanitizer and the proof-of-concept exploit no longer triggers.</p>
+
+          <h4>What I built</h4>
+          <ul>
+            <li><strong>Dense retrieval.</strong> CodeT5+ (220M) embeds about 150,000 vulnerable C functions from the MegaVul dataset. Embeddings are mean-pooled, L2-normalised and stored in an exact FAISS inner-product index, so search is exact cosine similarity. A query returns the 3 nearest vulnerable-and-fixed pairs in under 5 ms. The model loads lazily, and a missing index returns no examples instead of crashing, so retrieval is a safe optional signal.</li>
+            <li><strong>Evaluation harness.</strong> Extractors for VulnLoc (35 cases) and SAN2VULN (13 cases) pull each vulnerable function out of messy real repositories, handling merge commits, tag-based fixes and dead mirrors. A runner loops LLM → apply patch → ASAN compile → exploit → revert, and reports pass@k with per-case diagnostics.</li>
+            <li><strong>Correctness.</strong> I audited the harness, logged 8 bugs by severity and fixed the critical ones, including one that silently skipped cases and one that broke standalone runs. I wrote 34+ unit tests and 4 replication guides with exact commits and settings.</li>
+            <li><strong>Ablations.</strong> Flags switch each signal on or off, giving five configurations from no signals to all three, so each signal's contribution can be measured.</li>
+          </ul>
+
+          <h4>Alternatives considered</h4>
+          <p><strong>Exact vs approximate search.</strong> At 150,000 vectors, brute-force cosine search already runs in under 5 ms, so an approximate index would only have cost recall. <strong>Always-on vs adaptive retrieval.</strong> We shipped always-on retrieval, and the results show that was the wrong call.</p>
+
+          <h4>Results on Defects4C (52 CVEs, Pass@5)</h4>
+          <p class="aside">A teammate ran these through my harness.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Model</th><th>Signals</th><th class="n">Compiles</th><th class="n">Fixed</th><th class="n">Pass@5</th></tr></thead>
+              <tbody>
+                <tr><td>deepseek-coder:6.7b</td><td>none</td><td class="n">100.0%</td><td class="n">3</td><td class="n">5.8%</td></tr>
+                <tr><td>deepseek-coder:6.7b</td><td>location + type</td><td class="n">100.0%</td><td class="n">4</td><td class="n">7.7%</td></tr>
+                <tr class="bad"><td>deepseek-coder:6.7b</td><td>all three</td><td class="n c">92.3%</td><td class="n">1</td><td class="n">1.9%</td></tr>
+                <tr><td>llama3:8b</td><td>none</td><td class="n">100.0%</td><td class="n">7</td><td class="n">13.5%</td></tr>
+                <tr class="hl"><td>llama3:8b</td><td>location + type</td><td class="n">100.0%</td><td class="n">8</td><td class="n">15.4%</td></tr>
+                <tr class="bad"><td>llama3:8b</td><td>all three</td><td class="n c">96.2%</td><td class="n">8</td><td class="n">15.4%</td></tr>
+                <tr><td>mistral:7b</td><td>none</td><td class="n">100.0%</td><td class="n">2</td><td class="n">3.8%</td></tr>
+                <tr class="bad"><td>mistral:7b</td><td>all three</td><td class="n c">90.4%</td><td class="n">2</td><td class="n">3.8%</td></tr>
+              </tbody>
+              <caption>Pass@5 samples 5 patches at temperature 0.8 (seed 42). Highlighted: best result. Orange: compile rate fell when retrieval was added.</caption>
+            </table>
+          </div>
+          <ul>
+            <li><strong>The base model matters more than any signal.</strong> llama3:8b with no signals (13.5%) beat every deepseek and mistral configuration.</li>
+            <li><strong>Retrieval hurt.</strong> Adding retrieved examples lowered the compile rate for every model. The likely cause is that few-shot examples crowd a small model's context and push the target function out of focus.</li>
+            <li><strong>Knowing where the bug is wasn't enough.</strong> Given the true bug lines, the best model still fixed only 7.7% at Pass@1. Model capacity is the ceiling.</li>
+            <li><strong>Sampling matters for small models.</strong> Near-greedy Pass@1 sat at 0–1.9%. Sampling five candidates lifted the best result to 15.4%.</li>
+          </ul>
+
+          <h4>What I'd change</h4>
+          <ul>
+            <li>Judge a component on the end task, not in isolation. Retrieval met every one of its own targets and still made the pipeline worse. Next I'd only inject examples above a similarity threshold.</li>
+            <li>I ran VulnLoc and SAN2VULN myself but only reached partial results (around 14–17% on VulnLoc) before networking problems on our two-machine setup blocked a clean run. Only Defects4C is reported.</li>
+          </ul>
+        </div>
+      </details>
     </article>
 
-    <article class="project">
-      <h3>CX implementation</h3>
-      <p class="oneliner">A customer-experience system taken from requirements to a working deployment.</p>
-      <div class="media"><div><strong>Add: screenshot of the interface</strong>or a before / after</div></div>
-      <ul class="points">
-        <li><b>Problem</b><span><span class="todo">What was broken for the customer?</span></span></li>
-        <li><b>Approach</b><span><span class="todo">What you built, and your part in it</span></span></li>
-        <li><b>Result</b><span><span class="todo">Users, time saved, adoption</span></span></li>
-        <li><b>Engineering</b><span><span class="todo">Deployment, stack, team size</span></span></li>
-      </ul>
-      <div class="plinks"><a href="#">Case study ↗</a></div>
-      <div class="stack">Add stack</div>
+    <!-- ===================== CC+ ===================== -->
+    <article class="project" id="cc-plus">
+      <span class="label">Applied LLMs · Production · SUTD Capstone · Team of 7 · Oct 2025 – Apr 2026</span>
+      <h3>CC+: AI summaries of customer feedback</h3>
+      <p class="oneliner">A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.</p>
+      <p class="result"><b>Deployed and handed over to the industry partner in April 2026.</b> Weekly summaries are cached and load in under 5 seconds.</p>
+      <p class="myrole"><strong>My role:</strong> I owned the AI summariser from research to production, set up CI/CD, and wrote all 13 handover documents.</p>
+      <figure>
+        <ol class="flow" aria-label="CC+ system overview">
+          <li><small>Input</small>WhatsApp · forms · site visits</li>
+          <li><small>Backend</small>Node.js API</li>
+          <li><small>Classify · teammate</small>Aspect, sentiment, action needed</li>
+          <li class="mine"><small>Summarise · my work</small>Weekly digest per aspect</li>
+          <li><small>Show</small>Web dashboard · Android app</li>
+        </ol>
+        <div class="flow-legend"><i></i>My work</div>
+      </figure>
+      <p class="nda">Built under an NDA, so no code, data or screenshots are shown.</p>
+      <div class="stack">Python · Claude API · Hugging Face · Node.js · React · PostgreSQL · GCP Cloud Run · Cloud Build</div>
+
+      <details class="writeup">
+        <summary>Read the write-up</summary>
+        <div class="wu">
+          <h4>The problem</h4>
+          <p>Most of the company's revenue comes from repeat orders, but feedback arrived through WhatsApp and phone calls and lived in individual employees' heads. Each account manager looked after dozens of customers, so problems could go unnoticed until they cost a project. The goal was to collect feedback in one place, make it measurable, and surface what needs action.</p>
+
+          <h4>How the system works</h4>
+          <p>Feedback arrives from WhatsApp, online forms and on-site visits. A classification engine, built by my AI teammate, tags each message by aspect (product, service, delivery or payment), sentiment, and whether it needs action. Every week my summariser turns that feedback into a short digest for each aspect, shown on a web dashboard and an Android app.</p>
+
+          <h4>The summariser</h4>
+          <ol>
+            <li>Fetch the week's messages along with their classification results.</li>
+            <li>Hand them to a Python worker, which computes signals for each aspect: message count, average sentiment and overall label.</li>
+            <li>Send the signals and raw messages to Claude with a fixed, structured prompt (temperature 0) that requires five sections.</li>
+            <li>Parse the response, store it in PostgreSQL, and serve the cached copy on page load.</li>
+          </ol>
+          <ul>
+            <li><strong>Process isolation.</strong> The Node.js backend runs the Python worker as a separate process, so several hundred MB of model weights never sit in the web server and a model crash can't take the API down.</li>
+            <li><strong>Caching and fallback.</strong> A scheduled job writes each week's summary once. Pages load the stored copy in under 5 seconds without calling the model. If the current week has no feedback, the dashboard shows the last non-empty week, clearly labelled as older.</li>
+            <li><strong>Production fixes.</strong> Real usage exposed database connection-pool exhaustion under concurrent requests, and an empty-week check that counted messages instead of content. I fixed both and added an admin-only regenerate button.</li>
+            <li><strong>CI/CD and handover.</strong> Cloud Build runs tests on every pull request and deploys on merge. I wrote all 13 handover documents, organised with the Diátaxis framework (tutorials, how-to guides, reference and explanation), including 22 tracked tech-debt items.</li>
+          </ul>
+
+          <h4>Alternatives considered</h4>
+          <p>The summariser went through three stages, each driven by how the previous one failed:</p>
+          <ol>
+            <li><strong>Extractive and abstractive models</strong> (BART, PEGASUS, FLAN-T5). Extraction produced disconnected fragments, BART and PEGASUS wrote in an overly formal register for construction-site feedback, and FLAN-T5 didn't hold the structure.</li>
+            <li><strong>GPT-4o-mini vs Claude.</strong> Claude scored higher on faithfulness and coverage, judged independently by GPT-4o and Gemini 1.5 Pro, and offered better quality for the cost at projected scale.</li>
+            <li><strong>Structured prompt plus classification signals.</strong> Passing the per-aspect numbers alongside the raw text gave the strongest results on every dimension, and is what shipped.</li>
+          </ol>
+          <p>The jump from an unstructured prompt to a structured, signal-grounded one was bigger than the difference between the two models.</p>
+
+          <h4>Evaluation</h4>
+          <p>I built a provider-agnostic evaluation tool that compares Claude and GPT models on the platform's tasks, with a router that sends each request to the right provider.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Task</th><th class="n">Samples</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Weekly summaries</td><td class="n">200</td><td>Valid output: Claude 100%, GPT 96.5%</td></tr>
+                <tr><td>Voice transcription</td><td class="n">30</td><td>Whisper-1 and faster-whisper both near-zero error; faster-whisper 2–4× faster locally</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Limitations</h4>
+          <ul>
+            <li>I designed an 8-condition benchmark with ablations that isolate the prompt and the signals, but only verified it on the first batch before handover. The production choice rests on the staged comparison above, not on a completed statistical benchmark.</li>
+            <li>Integration tests were scaffolded but not run, so coverage relies on unit tests and manual testing.</li>
+          </ul>
+        </div>
+      </details>
     </article>
+
+    <!-- ===================== NLP ===================== -->
+    <article class="project" id="multilingual-gpt2">
+      <span class="label">NLP &amp; interpretability · SUTD Natural Language Processing · Group project · Nov – Dec 2025</span>
+      <h3>How far does English GPT-2 transfer? Multilingual NLI</h3>
+      <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
+      <p class="result"><b>Tokenizer fertility predicts zero-shot accuracy</b> across 15 languages (Spearman −0.818). Fine-tuning lifted the four chosen languages by 18–25 points.</p>
+      <p class="myrole"><strong>My role:</strong> I did the multilingual study and all of the extended analysis. Implementing GPT-2 and the English baseline was group work.</p>
+      <figure>
+        <svg class="scatter" viewBox="0 0 560 300" role="img" aria-labelledby="sc-t sc-d">
+<title id="sc-t">Tokenizer fertility vs zero-shot NLI accuracy, 15 languages</title>
+<desc id="sc-d">English sits alone at 1.11 fertility and 78.0% accuracy. The other 14 languages range from 35.9% to 45.6%, close to the 33.3% chance line, and accuracy falls as fertility rises, down to Thai at 9.48 fertility and 35.9%.</desc>
+<line class="grid" x1="48" x2="544" y1="256.0" y2="256.0"/><text class="tick" x="40" y="260.0" text-anchor="end">30%</text>
+<line class="grid" x1="48" x2="544" y1="207.6" y2="207.6"/><text class="tick" x="40" y="211.6" text-anchor="end">40%</text>
+<line class="grid" x1="48" x2="544" y1="159.2" y2="159.2"/><text class="tick" x="40" y="163.2" text-anchor="end">50%</text>
+<line class="grid" x1="48" x2="544" y1="110.8" y2="110.8"/><text class="tick" x="40" y="114.8" text-anchor="end">60%</text>
+<line class="grid" x1="48" x2="544" y1="62.4" y2="62.4"/><text class="tick" x="40" y="66.4" text-anchor="end">70%</text>
+<line class="grid" x1="48" x2="544" y1="14.0" y2="14.0"/><text class="tick" x="40" y="18.0" text-anchor="end">80%</text>
+<text class="tick" x="48.0" y="274" text-anchor="middle">0</text>
+<text class="tick" x="147.2" y="274" text-anchor="middle">2</text>
+<text class="tick" x="246.4" y="274" text-anchor="middle">4</text>
+<text class="tick" x="345.6" y="274" text-anchor="middle">6</text>
+<text class="tick" x="444.8" y="274" text-anchor="middle">8</text>
+<text class="tick" x="544.0" y="274" text-anchor="middle">10</text>
+<line class="axis" x1="48" x2="544" y1="256" y2="256"/>
+<line class="chance" x1="48" x2="544" y1="239.9" y2="239.9"/><text class="note" x="544" y="254.9" text-anchor="end">chance 33.3%</text>
+<text class="axlabel" x="296" y="294" text-anchor="middle">Tokenizer fertility (subword tokens per word, lower is better)</text>
+<circle class="pt" cx="103.1" cy="23.6" r="5"><title>English: fertility 1.11, zero-shot 78.02%</title></circle>
+<text class="plabel" x="112.1" y="27.6" text-anchor="start">English</text>
+<circle class="pt sel" cx="134.8" cy="205.8" r="5"><title>French: fertility 1.75, zero-shot 40.38%</title></circle>
+<text class="plabel" x="125.8" y="209.8" text-anchor="end">French</text>
+<circle class="pt sel" cx="138.8" cy="180.7" r="5"><title>Spanish: fertility 1.83, zero-shot 45.55%</title></circle>
+<text class="plabel" x="129.8" y="184.7" text-anchor="end">Spanish</text>
+<circle class="pt sel" cx="151.2" cy="216.4" r="5"><title>Swahili: fertility 2.08, zero-shot 38.18%</title></circle>
+<text class="plabel" x="142.2" y="232.4" text-anchor="end">Swahili</text>
+<circle class="pt sel" cx="152.2" cy="200.2" r="5"><title>German: fertility 2.10, zero-shot 41.52%</title></circle>
+<text class="plabel" x="161.2" y="200.2" text-anchor="start">German</text>
+<circle class="pt" cx="183.4" cy="217.6" r="5"><title>Turkish: fertility 2.73, zero-shot 37.94%</title></circle>
+<circle class="pt" cx="227.6" cy="221.4" r="5"><title>Vietnamese: fertility 3.62, zero-shot 37.15%</title></circle>
+<circle class="pt" cx="235.0" cy="210.9" r="5"><title>Chinese: fertility 3.77, zero-shot 39.32%</title></circle>
+<circle class="pt" cx="281.1" cy="221.7" r="5"><title>Arabic: fertility 4.70, zero-shot 37.09%</title></circle>
+<circle class="pt" cx="302.0" cy="223.5" r="5"><title>Hindi: fertility 5.12, zero-shot 36.71%</title></circle>
+<circle class="pt" cx="303.9" cy="226.1" r="5"><title>Urdu: fertility 5.16, zero-shot 36.17%</title></circle>
+<circle class="pt" cx="322.3" cy="224.2" r="5"><title>Bulgarian: fertility 5.53, zero-shot 36.57%</title></circle>
+<circle class="pt" cx="340.6" cy="218.2" r="5"><title>Russian: fertility 5.90, zero-shot 37.80%</title></circle>
+<circle class="pt" cx="353.5" cy="218.0" r="5"><title>Greek: fertility 6.16, zero-shot 37.86%</title></circle>
+<circle class="pt" cx="518.2" cy="227.6" r="5"><title>Thai: fertility 9.48, zero-shot 35.87%</title></circle>
+<text class="plabel" x="518.2" y="215.6" text-anchor="middle">Thai</text>
+</svg>
+
+        <figcaption><b>Fertility vs zero-shot accuracy.</b> Each dot is a language from XNLI (5,010 test examples each), scored by the English-tuned model. Blue: the four languages I chose to fine-tune. Hover a dot for its values.</figcaption>
+      </figure>
+      <div class="plinks"><span class="muted">Code: repository coming soon</span></div>
+      <div class="stack">PyTorch · GPT-2 · Hugging Face tokenizers · XNLI · scikit-learn</div>
+
+      <details class="writeup">
+        <summary>Read the write-up</summary>
+        <div class="wu">
+          <h4>Setup</h4>
+          <p>Natural language inference (NLI) asks whether a hypothesis follows from a premise, contradicts it, or is neutral, so chance is 33.3%. The group implemented GPT-2 small (attention, transformer blocks and the AdamW optimiser), framed NLI as predicting a single label token, and fine-tuned on English XNLI: 78.02% test accuracy at baseline and 82.28% after tuning. The course was taught by Prof. Wenxuan Zhang.</p>
+
+          <h4>What I did</h4>
+          <ul>
+            <li><strong>Zero-shot transfer.</strong> I ran the English-tuned model on all 15 XNLI languages. English scored 78.02%, and every other language landed between 35.87% and 45.55%, barely above chance.</li>
+            <li><strong>Fertility as a cheap predictor.</strong> Fertility is the number of subword tokens per word. A high value means the tokenizer barely knows the language. It ranges from 1.11 for English to 9.48 for Thai, and its rank correlation with zero-shot accuracy is −0.818.</li>
+            <li><strong>Choosing what to fine-tune.</strong> I picked Spanish, French, German and Swahili for low fertility and higher zero-shot scores. Swahili adds a language outside the Indo-European family.</li>
+            <li><strong>One model per language vs one for all.</strong> I fine-tuned a separate model for each language, and a single unified model on all five languages together.</li>
+          </ul>
+          <figure>
+            <div class="chart-key"><span><i style="background:var(--chart-ref)"></i>Zero-shot</span><span><i style="background:var(--chart-1)"></i>Per-language model</span><span><i style="background:var(--chart-2)"></i>One unified model</span></div>
+            <div class="vchart" role="img" aria-label="Accuracy by language: German 41.5, 63.9, 61.5. Spanish 45.6, 63.5, 64.6. French 40.4, 65.9, 62.9. Swahili 38.2, 58.0, 56.5.">
+              <div class="vaxis"><span style="--t:0">0</span><span style="--t:20">20</span><span style="--t:40">40</span><span style="--t:60">60</span></div>
+              <div class="vplot">
+                <span class="gl" style="--t:20"></span><span class="gl" style="--t:40"></span><span class="gl" style="--t:60"></span>
+                <span class="chance"><span>chance</span></span>
+                <div class="vg"><i style="--v:41.52" title="German, zero-shot: 41.52%"></i><i class="pl" style="--v:63.86" title="German, per-language: 63.86%"></i><i class="un" style="--v:61.45" title="German, unified: 61.45%"></i></div>
+                <div class="vg"><i style="--v:45.55" title="Spanish, zero-shot: 45.55%"></i><i class="pl" style="--v:63.45" title="Spanish, per-language: 63.45%"></i><i class="un" style="--v:64.58" title="Spanish, unified: 64.58%"></i></div>
+                <div class="vg"><i style="--v:40.38" title="French, zero-shot: 40.38%"></i><i class="pl" style="--v:65.86" title="French, per-language: 65.86%"></i><i class="un" style="--v:62.85" title="French, unified: 62.85%"></i></div>
+                <div class="vg"><i style="--v:38.18" title="Swahili, zero-shot: 38.18%"></i><i class="pl" style="--v:58.03" title="Swahili, per-language: 58.03%"></i><i class="un" style="--v:56.47" title="Swahili, unified: 56.47%"></i></div>
+              </div>
+              <div class="vnames"><span>German</span><span>Spanish</span><span>French</span><span>Swahili</span></div>
+            </div>
+            <figcaption><b>NLI accuracy (%) before and after fine-tuning.</b> Exact values are in the table below.</figcaption>
+          </figure>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Language</th><th class="n">Fertility</th><th class="n">Zero-shot</th><th class="n">Per-language</th><th class="n">Unified</th></tr></thead>
+              <tbody>
+                <tr><td>German</td><td class="n">2.10</td><td class="n">41.52</td><td class="n">63.86</td><td class="n">61.45</td></tr>
+                <tr><td>Spanish</td><td class="n">1.83</td><td class="n">45.55</td><td class="n">63.45</td><td class="n">64.58</td></tr>
+                <tr><td>French</td><td class="n">1.75</td><td class="n">40.38</td><td class="n">65.86</td><td class="n">62.85</td></tr>
+                <tr><td>Swahili</td><td class="n">2.08</td><td class="n">38.18</td><td class="n">58.03</td><td class="n">56.47</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The single unified model came within about 3 points of four separate models and beat the Spanish one (64.58% vs 63.45%), which makes it the more practical choice.</p>
+
+          <h4>Looking inside the model</h4>
+          <ul>
+            <li><strong>Embeddings don't separate by language.</strong> A t-SNE of 3,000 sentence embeddings across 15 languages overlapped heavily (silhouette score 0.090).</li>
+            <li><strong>Attention changes with depth.</strong> Both layers attend heavily to the first token, but the deep layer adds more structured attention over content words.</li>
+            <li><strong>The signal is there, but prompting can't reach it.</strong> On a synthetic dataset of Singaporean-parent tone (care, disappointment, comparison and guilt), prompting GPT-2 scored 25.4%, which is chance for four classes. A linear probe on the same model's frozen embeddings scored 94.4%.</li>
+          </ul>
+          <figure>
+            <div class="media-frame"><img src="media/nlp-attention-shallow-deep.webp" width="1632" height="660" loading="lazy" alt="Two attention heatmaps for the same English premise and hypothesis: layer 0 is diffuse, layer 11 concentrates on early and content tokens."></div>
+            <figcaption><b>Attention in layer 0 (left) and layer 11 (right)</b>, head 0, for one English example.</figcaption>
+          </figure>
+
+          <h4>Limitations</h4>
+          <ul>
+            <li>A pragmatic-inference probe looked fine on accuracy (0.76), but its macro-F1 was 0.47 because it almost always predicted "contradiction". Accuracy alone would have hidden this.</li>
+            <li>The tone probe didn't transfer across languages: 97.7% in English but 25.0%, chance level, in Chinese.</li>
+            <li>The per-language numbers are best-checkpoint accuracies from the original notebook. The cleaned re-run will report every model on the same test split.</li>
+          </ul>
+        </div>
+      </details>
+    </article>
+
+    <h3 style="margin-top:40px">More projects</h3>
+    <ul class="more">
+      <li>
+        <span class="t">Music recommendation from mood prompts</span>
+        <span class="m">Project Leader · SUTD · Feb – Apr 2025</span>
+        <p>Turns a free-text request, such as a mood or genre, into a target set of audio features, matches it against clusters of the listener's recent tracks, and builds a Spotify playlist.</p>
+        <div class="plinks"><a href="https://github.com/kaps-c/Music-Recommendation-Using-Prompts" target="_blank" rel="noopener">Code ↗</a></div>
+      </li>
+      <li>
+        <span class="t">HDB resale price prediction</span>
+        <span class="m">Project Leader, team of 3 · SUTD · Feb – Apr 2025</span>
+        <p>Forecasting Singapore public-housing resale prices with sequence models. I built the LSTM and the data preprocessing pipeline in PyTorch; teammates compared GRU and autoencoder models.</p>
+      </li>
+      <li>
+        <span class="t">Hate speech classification</span>
+        <span class="m">Project Leader, team of 5 · SUTD 50.007 · May – Aug 2024</span>
+        <p>A classical baseline: TF-IDF features and Gaussian Naïve Bayes, tuned with 5-fold grid search. Accuracy was 0.66 but macro-F1 only 0.51, because recall on one class was 0.15, a clear sign of where a simple model breaks.</p>
+        <div class="plinks"><a href="https://github.com/kaps-c/50.007-Hate-Speech-Classification" target="_blank" rel="noopener">Code ↗</a></div>
+      </li>
+    </ul>
   </section>
 
   <section id="experience">
     <h2>Experience</h2>
-    <div class="entry slot">
-      <div class="entry-head"><b>Role · Company</b><span class="when">Mon YYYY – Mon YYYY</span></div>
-      <ul><li>What you shipped, with a number</li><li>One more result</li></ul>
+    <div class="entry">
+      <div class="entry-head"><b>ProfilePrint · Data Science / Computer Vision Intern</b><span class="when">May – Sep 2025</span></div>
+      <span class="sub">Food-tech startup, via SGInnovate's Summation Programme</span>
+      <ul>
+        <li>Migrated and refactored legacy deep-learning models for coffee-quality prediction into modular PyTorch components, working with the data science team, and integrated hyperparameter tuning.</li>
+        <li>Compared internal pipelines for predicting non-visual defects end to end: data handling, model application, benchmarking, and presenting results to the team.</li>
+        <li>Worked with sparse industrial data labelled only at the batch level, not per sample, which called for weakly supervised methods.</li>
+        <li>Assisted a research-stage computer-vision project on image-based defect detection in individual specimens.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><b>Mission Math · Secondary Math &amp; Science Tutor</b><span class="when">May 2023 – Apr 2025</span></div>
+      <p>Converted 95% of trial lessons into regular enrolments, with high student retention.</p>
     </div>
   </section>
 
@@ -183,17 +620,21 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
     <div class="entry">
       <div class="entry-head"><b>Singapore University of Technology &amp; Design</b><span class="when">Sep 2022 – May 2026</span></div>
       <span>B.Eng Computer Science &amp; Design · Data Analytics &amp; AI track</span>
-      <ul><li>Coursework: computer vision (U-Net, YOLO, ViT, Swin), deep learning, NLP</li></ul>
+      <ul>
+        <li>Yangzheng Foundation Study Award, AY2025</li>
+        <li>Coursework: natural language processing, machine learning, artificial intelligence, computer vision</li>
+      </ul>
     </div>
   </section>
 
   <section id="skills">
     <h2>Skills</h2>
     <dl class="skills">
-      <dt>Languages</dt><dd>Python, SQL, Java, JavaScript</dd>
-      <dt>Machine learning</dt><dd>PyTorch, CNNs, Transformers, self-supervised learning</dd>
-      <dt>LLMs &amp; NLP</dt><dd>Prompt engineering, LLM evaluation, NER / CRF</dd>
-      <dt>Engineering</dt><dd>REST APIs, OOP, Git</dd>
+      <dt>Languages</dt><dd>Python, SQL, JavaScript</dd>
+      <dt>Machine learning</dt><dd>PyTorch, Hugging Face Transformers, scikit-learn, FAISS, Optuna, Ray Tune</dd>
+      <dt>LLMs</dt><dd>Claude and OpenAI APIs, Ollama, retrieval, LLM-as-judge evaluation</dd>
+      <dt>Engineering</dt><dd>Node.js, React, PostgreSQL, Google Cloud (Cloud Run, Cloud Build), Git, unit testing</dd>
+      <dt>Data</dt><dd>Pandas, NumPy, Matplotlib, Power BI</dd>
     </dl>
   </section>
 
@@ -207,7 +648,6 @@ const show=()=>btn.textContent=current()==='dark'?'Light mode':'Dark mode';
 try{const s=localStorage.getItem('c-theme');if(s)root.dataset.theme=s}catch(e){}
 show();
 btn.addEventListener('click',()=>{const n=current()==='dark'?'light':'dark';root.dataset.theme=n;show();try{localStorage.setItem('c-theme',n)}catch(e){}});
-// highlight the section in view
 const links=[...document.querySelectorAll('.jump nav a')];
 const targets=links.map(a=>document.querySelector(a.getAttribute('href')));
 function mark(){
@@ -216,11 +656,13 @@ function mark(){
   links.forEach((a,k)=>a.classList.toggle('active',k===i));
 }
 addEventListener('scroll',mark,{passive:true});mark();
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('video[autoplay]').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()})}
 document.getElementById('copy-mail').addEventListener('click',()=>{
   const st=document.getElementById('copy-status');
   const fb=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('mail'));const s=getSelection();s.removeAllRanges();s.addRange(r);st.textContent='Selected, press Ctrl/⌘+C';};
   try{navigator.clipboard.writeText('tengcelest@gmail.com').then(()=>st.textContent='Copied',fb)}catch(e){fb()}
 });
 </script>
+
 </body>
 </html>
