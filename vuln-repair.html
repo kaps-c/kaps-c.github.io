@@ -1,36 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.">
 <title>Repairing C vulnerabilities with small open LLMs · Celest (Ciel) Teng</title>
+<meta name="description" content="Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.">
+<link rel="canonical" href="https://kaps-c.github.io/vuln-repair.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Celest (Ciel) Teng">
+<meta property="og:title" content="Repairing C vulnerabilities with small open LLMs · Celest (Ciel) Teng">
+<meta property="og:description" content="Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.">
+<meta property="og:url" content="https://kaps-c.github.io/vuln-repair.html">
+<meta property="og:image" content="https://kaps-c.github.io/card/photo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141920" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('c-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="col">
   <div class="jump">
     <nav aria-label="Site"><a href="./#projects">← All projects</a><a href="./#top">Contact</a></nav>
-    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+    <button class="toggle" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
   </div>
-  <header class="page-head" id="top">
-    <span class="label">LLMs & evaluation · SUTD · Team of 5 · Apr 2026</span>
-    <h1>Repairing C vulnerabilities with small open LLMs</h1>
-    <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
-    <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
-    <div class="plinks"><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
-  </header>
-  <article class="wu page">
-          <h4>The problem</h4>
+  <main id="main" class="sections">
+    <header class="page-head">
+      <p class="label">LLMs &amp; evaluation · SUTD · Team of 5 · Apr 2026</p>
+      <h1>Repairing C vulnerabilities with small open LLMs</h1>
+      <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
+      <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
+      <div class="plinks"><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
+    </header>
+    <article class="wu" aria-label="Write-up">
+          <h2>The problem</h2>
           <p>The state of the art in vulnerability repair (SAN2PATCH) reaches 79.5% Pass@1, but it uses GPT-4o, the true location of the bug, and sanitizer crash logs. We asked a harder, more realistic question: how far can open 7B models get with only the raw function and <em>predicted</em> bug locations? The constraint isolates what structured ML signals add.</p>
 
-          <h4>How it works</h4>
+          <h2>How it works</h2>
           <p>Three signals feed a structured few-shot prompt. A fault-localisation model scores each line, a classifier predicts the vulnerability type, and dense retrieval finds similar past bugs along with their fixes. An open model (llama3:8b, deepseek-coder:6.7b or mistral:7b, served locally with Ollama) writes a patch. The patch only counts if it compiles under AddressSanitizer and the proof-of-concept exploit no longer triggers.</p>
-          <figure><ol class="flow vertical" aria-label="Repair pipeline"><li><small>1 · Input</small>Vulnerable C function</li><li><small>2 · Signals</small>Fault localisation and vulnerability classification</li><li class="mine"><small>3 · Signal · my work</small>Dense retrieval: 3 similar fixed bugs from 150k</li><li><small>4 · Generate</small>Structured few-shot prompt → open 7B LLM</li><li class="mine"><small>5 · Verify · my work</small>Apply patch → ASAN compile → run exploit → pass@k</li></ol><div class="flow-legend"><i></i>My work</div><figcaption><b>Repair pipeline.</b> A patch only counts if it compiles under AddressSanitizer and the exploit no longer triggers.</figcaption></figure>
+          <figure><ol class="flow"><li><small>1 · Input</small>Vulnerable C function</li><li><small>2 · Signals</small>Fault localisation and vulnerability classification</li><li class="mine"><small>3 · Signal · my work</small>Dense retrieval: 3 similar fixed bugs from 150k</li><li><small>4 · Generate</small>Structured few-shot prompt → open 7B LLM</li><li class="mine"><small>5 · Verify · my work</small>Apply patch → ASAN compile → run exploit → pass@k</li></ol><div class="flow-legend"><i></i>My work</div><figcaption><b>Repair pipeline.</b> A patch only counts if it compiles under AddressSanitizer and the exploit no longer triggers.</figcaption></figure>
 
-          <h4>What I built</h4>
+          <h2>What I built</h2>
           <ul>
             <li><strong>Dense retrieval.</strong> CodeT5+ (220M) embeds about 150,000 vulnerable C functions from the MegaVul dataset. Embeddings are mean-pooled, L2-normalised and stored in an exact FAISS inner-product index, so search is exact cosine similarity. A query returns the 3 nearest vulnerable-and-fixed pairs in under 5 ms. The model loads lazily, and a missing index returns no examples instead of crashing, so retrieval is a safe optional signal.</li>
             <li><strong>Evaluation harness.</strong> Extractors for VulnLoc (35 cases) and SAN2VULN (13 cases) pull each vulnerable function out of messy real repositories, handling merge commits, tag-based fixes and dead mirrors. A runner loops LLM → apply patch → ASAN compile → exploit → revert, and reports pass@k with per-case diagnostics.</li>
@@ -38,14 +54,15 @@
             <li><strong>Ablations.</strong> Flags switch each signal on or off, giving five configurations from no signals to all three, so each signal's contribution can be measured.</li>
           </ul>
 
-          <h4>Alternatives considered</h4>
+          <h2>Alternatives considered</h2>
           <p><strong>Exact vs approximate search.</strong> At 150,000 vectors, brute-force cosine search already runs in under 5 ms, so an approximate index would only have cost recall. <strong>Always-on vs adaptive retrieval.</strong> We shipped always-on retrieval, and the results show that was the wrong call.</p>
 
-          <h4>Results on Defects4C (52 CVEs, Pass@5)</h4>
+          <h2>Results on Defects4C (52 CVEs, Pass@5)</h2>
           <p class="aside">A teammate ran these through my harness.</p>
-          <div class="table-wrap">
+          <section class="table-wrap" tabindex="0" aria-label="Results table">
             <table>
-              <thead><tr><th>Model</th><th>Signals</th><th class="n">Compiles</th><th class="n">Fixed</th><th class="n">Pass@5</th></tr></thead>
+              <caption>Pass@5 samples 5 patches at temperature 0.8 (seed 42). Highlighted: best result. Orange: compile rate fell when retrieval was added.</caption>
+              <thead><tr><th scope="col">Model</th><th scope="col">Signals</th><th scope="col" class="n">Compiles</th><th scope="col" class="n">Fixed</th><th scope="col" class="n">Pass@5</th></tr></thead>
               <tbody>
                 <tr><td>deepseek-coder:6.7b</td><td>none</td><td class="n">100.0%</td><td class="n">3</td><td class="n">5.8%</td></tr>
                 <tr><td>deepseek-coder:6.7b</td><td>location + type</td><td class="n">100.0%</td><td class="n">4</td><td class="n">7.7%</td></tr>
@@ -56,9 +73,8 @@
                 <tr><td>mistral:7b</td><td>none</td><td class="n">100.0%</td><td class="n">2</td><td class="n">3.8%</td></tr>
                 <tr class="bad"><td>mistral:7b</td><td>all three</td><td class="n c">90.4%</td><td class="n">2</td><td class="n">3.8%</td></tr>
               </tbody>
-              <caption>Pass@5 samples 5 patches at temperature 0.8 (seed 42). Highlighted: best result. Orange: compile rate fell when retrieval was added.</caption>
             </table>
-          </div>
+          </section>
           <ul>
             <li><strong>The base model matters more than any signal.</strong> llama3:8b with no signals (13.5%) beat every deepseek and mistral configuration.</li>
             <li><strong>Retrieval hurt.</strong> Adding retrieved examples lowered the compile rate for every model. The likely cause is that few-shot examples crowd a small model's context and push the target function out of focus.</li>
@@ -66,15 +82,15 @@
             <li><strong>Sampling matters for small models.</strong> Near-greedy Pass@1 sat at 0–1.9%. Sampling five candidates lifted the best result to 15.4%.</li>
           </ul>
 
-          <h4>What I'd change</h4>
+          <h2>What I'd change</h2>
           <ul>
             <li>Judge a component on the end task, not in isolation. Retrieval met every one of its own targets and still made the pipeline worse. Next I'd only inject examples above a similarity threshold.</li>
             <li>I ran VulnLoc and SAN2VULN myself but only reached partial results (around 14–17% on VulnLoc) before networking problems on our two-machine setup blocked a clean run. Only Defects4C is reported.</li>
           </ul>
         </article>
-  <nav class="pager" aria-label="More write-ups"><a href="snekboros.html"><span>← Previous</span>Snekboros: vision world models for Snake</a><a href="cc-plus.html" style="text-align:right"><span>Next →</span>CC+: AI summaries of customer feedback</a></nav>
-  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+    <nav class="pager" aria-label="More write-ups"><a href="snekboros.html"><span>← Previous</span>Snekboros: vision world models for Snake</a><a class="next" href="cc-plus.html"><span>Next →</span>CC+: AI summaries of customer feedback</a></nav>
+  </main>
+  <footer class="site-footer"><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
 </div>
-<script src="script.js"></script>
 </body>
 </html>

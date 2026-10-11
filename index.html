@@ -1,82 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Celest (Ciel) Teng: machine learning engineer in Singapore. Projects in self-supervised world models, LLM evaluation and production ML.">
 <title>Celest (Ciel) Teng</title>
+<meta name="description" content="Celest (Ciel) Teng: machine learning engineer in Singapore. Projects in self-supervised world models, LLM evaluation and production ML.">
+<link rel="canonical" href="https://kaps-c.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Celest (Ciel) Teng">
+<meta property="og:title" content="Celest (Ciel) Teng">
+<meta property="og:description" content="Celest (Ciel) Teng: machine learning engineer in Singapore. Projects in self-supervised world models, LLM evaluation and production ML.">
+<meta property="og:url" content="https://kaps-c.github.io/">
+<meta property="og:image" content="https://kaps-c.github.io/card/photo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141920" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('c-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="col">
   <div class="jump">
-    <nav aria-label="Jump to section">
+    <nav aria-label="Sections">
       <a href="#top">Contact</a>
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
       <a href="#skills">Skills</a>
     </nav>
-    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+    <button class="toggle" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
   </div>
 
-  <header id="top">
-    <h1>Celest (Ciel) Teng</h1>
-    <p class="role">Machine Learning Engineer · SUTD, Class of 2026</p>
-    <p class="intro">I build self-supervised models, evaluation pipelines for LLM systems, and the plumbing that gets ML into production.</p>
-    <ul class="meta">
-      <li class="avail">Open to full-time roles</li>
-      <li>Singapore</li>
-      <li>ML Engineer · AI Engineer · SWE</li>
-    </ul>
-    <div class="actions">
-      <a class="btn primary" href="Celest-Teng-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
-      <a class="btn" href="https://github.com/kaps-c" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/celest-teng" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-    <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
-  </header>
+  <main id="main" class="sections">
+    <header class="intro-block" id="top">
+      <h1>Celest (Ciel) Teng</h1>
+      <p class="role">Machine Learning Engineer · SUTD, Class of 2026</p>
+      <p class="intro">I build self-supervised models, evaluation pipelines for LLM systems, and the plumbing that gets ML into production.</p>
+      <ul class="meta">
+        <li class="avail">Open to full-time roles</li>
+        <li>Singapore</li>
+        <li>ML Engineer · AI Engineer · SWE</li>
+      </ul>
+      <div class="actions">
+        <a class="btn primary" href="Celest-Teng-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+        <a class="btn" href="https://github.com/kaps-c" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/celest-teng" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
+    </header>
 
-  <section id="projects">
-    <h2>Projects</h2>
+    <section id="projects" aria-labelledby="projects-h">
+      <h2 id="projects-h">Projects</h2>
 
-    <article class="project" id="snekboros">
-      <div><h3>Snekboros: vision world models for Snake</h3><p class="card-meta">SUTD · Team of 4 · Apr 2026</p></div>
-      <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
-      <figure><div class="frame dark"><video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline width="224" height="224" aria-label="Snake moving around a 14 by 14 grid, growing as it eats green food"></video></div><figcaption>A 14×14 rollout used to score my JEPA model. An oracle moves the snake; the model predicts each next step.</figcaption></figure>
-      <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
-      <div class="plinks"><a class="read" href="snekboros.html">Read the write-up →</a><span class="muted">Final report available on request</span></div>
-      <div class="stack">PyTorch · JEPA · SIGReg · VICReg · ConvGRU · ViT · Optuna</div>
-    </article>
-    <article class="project" id="vuln-repair">
-      <div><h3>Repairing C vulnerabilities with small open LLMs</h3><p class="card-meta">SUTD · Team of 5 · Apr 2026</p></div>
-      <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
-      <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>A short screen recording of the harness fixing one CVE: patch generated, ASAN compile passes, exploit no longer fires.</p></div><figcaption>Placeholder for a recording of the pipeline running.</figcaption></figure>
-      <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
-      <div class="plinks"><a class="read" href="vuln-repair.html">Read the write-up →</a><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
-      <div class="stack">Python · PyTorch · CodeT5+ · FAISS · Ollama · AddressSanitizer</div>
-    </article>
-    <article class="project" id="cc-plus">
-      <div><h3>CC+: AI summaries of customer feedback</h3><p class="card-meta">SUTD Capstone with an industry partner · Team of 7 · Oct 2025 – Apr 2026</p></div>
-      <p class="oneliner">A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.</p>
-      <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>An example weekly digest with fictional data, if the NDA allows. Otherwise this card goes without a visual.</p></div><figcaption>Built under an NDA, so no code, real data or screenshots are shown.</figcaption></figure>
-      <ul class="points"><li><b>Problem</b><span>Customer feedback lived in WhatsApp threads and people's heads, so problems went unnoticed until they cost a project.</span></li><li><b>Approach</b><span>Classify each message, then summarise the week per aspect with Claude, grounded in the classification signals.</span></li><li><b>Result</b><span>Deployed and handed over to the industry partner in April 2026. Cached weekly summaries load in under 5 seconds.</span></li><li><b>My role</b><span>Owned the summariser from research to production, set up CI/CD, and wrote all 13 handover documents.</span></li></ul>
-      <div class="plinks"><a class="read" href="cc-plus.html">Read the write-up →</a><span class="muted">Under NDA, so no public code</span></div>
-      <div class="stack">Python · Claude API · Hugging Face · Node.js · React · PostgreSQL · GCP</div>
-    </article>
-    <article class="project" id="multilingual-gpt2">
-      <div><h3>How far does English GPT-2 transfer? Multilingual NLI</h3><p class="card-meta">SUTD Natural Language Processing · Group project · Nov – Dec 2025</p></div>
-      <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
-      <figure><div class="frame white"><img src="media/nlp-attention-shallow-deep.webp" width="1632" height="660" loading="lazy" alt="Two attention heatmaps for the same English example: layer 0 is diffuse, layer 11 concentrates on early and content tokens."></div><figcaption>Attention in layer 0 (left) and layer 11 (right) for one English example.</figcaption></figure>
-      <ul class="points"><li><b>Problem</b><span>How well does an English-trained GPT-2 handle 14 other languages, and what predicts how well it does?</span></li><li><b>Approach</b><span>Zero-shot tests on 15 XNLI languages, tokenizer fertility analysis, then per-language vs unified fine-tuning.</span></li><li><b>Result</b><span>Fertility predicts zero-shot accuracy (Spearman −0.818). Fine-tuning added 18–25 points.</span></li><li><b>My role</b><span>Ran the multilingual study and all of the extended analysis. Implementing GPT-2 was group work.</span></li></ul>
-      <div class="plinks"><a class="read" href="multilingual-gpt2.html">Read the write-up →</a><span class="muted">Repository coming soon</span></div>
-      <div class="stack">PyTorch · GPT-2 · XNLI · scikit-learn</div>
-    </article>
+      <article class="project" id="snekboros">
+        <div><h3>Snekboros: vision world models for Snake</h3><p class="card-meta">SUTD · Team of 4 · Apr 2026</p></div>
+        <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
+        <figure><div class="frame dark"><video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline controls width="224" height="224"></video></div><figcaption>A 14×14 rollout used to score my JEPA model. An oracle moves the snake; the model predicts each next step.</figcaption></figure>
+        <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
+        <div class="plinks"><a class="read" href="snekboros.html">Read the write-up<span class="visually-hidden">: Snekboros: vision world models for Snake</span> →</a><span class="muted">Final report available on request</span></div>
+        <p class="stack">PyTorch · JEPA · SIGReg · VICReg · ConvGRU · ViT · Optuna</p>
+      </article>
+      <article class="project" id="vuln-repair">
+        <div><h3>Repairing C vulnerabilities with small open LLMs</h3><p class="card-meta">SUTD · Team of 5 · Apr 2026</p></div>
+        <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
+        <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>A short screen recording of the harness fixing one CVE: patch generated, ASAN compile passes, exploit no longer fires.</p></div><figcaption>Placeholder for a recording of the pipeline running.</figcaption></figure>
+        <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
+        <div class="plinks"><a class="read" href="vuln-repair.html">Read the write-up<span class="visually-hidden">: Repairing C vulnerabilities with small open LLMs</span> →</a><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
+        <p class="stack">Python · PyTorch · CodeT5+ · FAISS · Ollama · AddressSanitizer</p>
+      </article>
+      <article class="project" id="cc-plus">
+        <div><h3>CC+: AI summaries of customer feedback</h3><p class="card-meta">SUTD Capstone with an industry partner · Team of 7 · Oct 2025 – Apr 2026</p></div>
+        <p class="oneliner">A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.</p>
+        <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>An example weekly digest with fictional data, if the NDA allows. Otherwise this card goes without a visual.</p></div><figcaption>Built under an NDA, so no code, real data or screenshots are shown.</figcaption></figure>
+        <ul class="points"><li><b>Problem</b><span>Customer feedback lived in WhatsApp threads and people&#x27;s heads, so problems went unnoticed until they cost a project.</span></li><li><b>Approach</b><span>Classify each message, then summarise the week per aspect with Claude, grounded in the classification signals.</span></li><li><b>Result</b><span>Deployed and handed over to the industry partner in April 2026. Cached weekly summaries load in under 5 seconds.</span></li><li><b>My role</b><span>Owned the summariser from research to production, set up CI/CD, and wrote all 13 handover documents.</span></li></ul>
+        <div class="plinks"><a class="read" href="cc-plus.html">Read the write-up<span class="visually-hidden">: CC+: AI summaries of customer feedback</span> →</a><span class="muted">Under NDA, so no public code</span></div>
+        <p class="stack">Python · Claude API · Hugging Face · Node.js · React · PostgreSQL · GCP</p>
+      </article>
+      <article class="project" id="multilingual-gpt2">
+        <div><h3>How far does English GPT-2 transfer? Multilingual NLI</h3><p class="card-meta">SUTD Natural Language Processing · Group project · Nov – Dec 2025</p></div>
+        <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
+        <figure><div class="frame white"><img src="media/nlp-attention-shallow-deep.webp" width="1632" height="660" loading="lazy" alt="Two attention heatmaps for the same English example: layer 0 is diffuse, layer 11 concentrates on early and content tokens."></div><figcaption>Attention in layer 0 (left) and layer 11 (right) for one English example.</figcaption></figure>
+        <ul class="points"><li><b>Problem</b><span>How well does an English-trained GPT-2 handle 14 other languages, and what predicts how well it does?</span></li><li><b>Approach</b><span>Zero-shot tests on 15 XNLI languages, tokenizer fertility analysis, then per-language vs unified fine-tuning.</span></li><li><b>Result</b><span>Fertility predicts zero-shot accuracy (Spearman −0.818). Fine-tuning added 18–25 points.</span></li><li><b>My role</b><span>Ran the multilingual study and all of the extended analysis. Implementing GPT-2 was group work.</span></li></ul>
+        <div class="plinks"><a class="read" href="multilingual-gpt2.html">Read the write-up<span class="visually-hidden">: How far does English GPT-2 transfer? Multilingual NLI</span> →</a><span class="muted">Repository coming soon</span></div>
+        <p class="stack">PyTorch · GPT-2 · XNLI · scikit-learn</p>
+      </article>
 
-    <h3 style="margin-top:40px">More projects</h3>
-    <ul class="more">
+      <h3 class="subhead">More projects</h3>
+      <ul class="more">
       <li>
         <span class="t">Music recommendation from mood prompts</span>
         <span class="m">Project Leader · SUTD · Feb – Apr 2025</span>
@@ -106,12 +122,12 @@
         <div class="plinks"><a href="https://github.com/kaps-c/50.007-Hate-Speech-Classification" target="_blank" rel="noopener">Code ↗</a></div>
       </li>
     </ul>
-  </section>
+    </section>
 
-  <section id="experience">
-    <h2>Experience</h2>
+    <section id="experience" aria-labelledby="experience-h">
+    <h2 id="experience-h">Experience</h2>
     <div class="entry">
-      <div class="entry-head"><b>ProfilePrint · Data Science / Computer Vision Intern</b><span class="when">May – Sep 2025</span></div>
+      <div class="entry-head"><h3 class="entry-title">ProfilePrint · Data Science / Computer Vision Intern</h3><span class="when">May – Sep 2025</span></div>
       <span class="sub">AI ingredient-quality assessment platform for food companies · via SGInnovate's Summation Programme</span>
       <ul>
         <li>Migrated and refactored legacy deep-learning models for coffee-quality prediction into modular PyTorch components, matching the original models' performance, and integrated hyperparameter tuning.</li>
@@ -122,15 +138,15 @@
       <p class="lesson"><b>Lesson learned:</b> after the migration, training broke and it took days to find out why. I had left out <code>shuffle=True</code> on the training data loader, so the model saw the data in a fixed order every epoch. One flag fixed it, and the results matched the original models again. Now the data pipeline is the first thing I check.</p>
     </div>
     <div class="entry">
-      <div class="entry-head"><b>Mission Math · Secondary Math &amp; Science Tutor</b><span class="when">May 2023 – Apr 2025</span></div>
+      <div class="entry-head"><h3 class="entry-title">Mission Math · Secondary Math &amp; Science Tutor</h3><span class="when">May 2023 – Apr 2025</span></div>
       <p>Converted 95% of trial lessons into regular enrolments, with high student retention.</p>
     </div>
   </section>
 
-  <section id="education">
-    <h2>Education</h2>
+  <section id="education" aria-labelledby="education-h">
+    <h2 id="education-h">Education</h2>
     <div class="entry">
-      <div class="entry-head"><b>Singapore University of Technology &amp; Design</b><span class="when">Sep 2022 – May 2026</span></div>
+      <div class="entry-head"><h3 class="entry-title">Singapore University of Technology &amp; Design</h3><span class="when">Sep 2022 – May 2026</span></div>
       <span>B.Eng Computer Science &amp; Design · Data Analytics &amp; AI track</span>
       <ul>
         <li>Yangzheng Foundation Study Award, AY2025</li>
@@ -139,8 +155,8 @@
     </div>
   </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
+  <section id="skills" aria-labelledby="skills-h">
+    <h2 id="skills-h">Skills</h2>
     <dl class="skills">
       <dt>Languages</dt><dd>Python, SQL, JavaScript, Java</dd>
       <dt>Machine learning</dt><dd>PyTorch, Hugging Face Transformers, scikit-learn, FAISS, Optuna, Ray Tune</dd>
@@ -149,10 +165,9 @@
       <dt>Data</dt><dd>Pandas, NumPy, Matplotlib, Power BI</dd>
     </dl>
   </section>
+  </main>
 
-  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+  <footer class="site-footer"><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
 </div>
-
-<script src="script.js"></script>
 </body>
 </html>

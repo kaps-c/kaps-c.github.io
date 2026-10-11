@@ -1,34 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.">
 <title>Snekboros · Celest (Ciel) Teng</title>
+<meta name="description" content="An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.">
+<link rel="canonical" href="https://kaps-c.github.io/snekboros.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Celest (Ciel) Teng">
+<meta property="og:title" content="Snekboros · Celest (Ciel) Teng">
+<meta property="og:description" content="An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.">
+<meta property="og:url" content="https://kaps-c.github.io/snekboros.html">
+<meta property="og:image" content="https://kaps-c.github.io/card/photo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141920" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('c-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="col">
   <div class="jump">
     <nav aria-label="Site"><a href="./#projects">← All projects</a><a href="./#top">Contact</a></nav>
-    <button class="toggle" id="theme-toggle" type="button">Dark mode</button>
+    <button class="toggle" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
   </div>
-  <header class="page-head" id="top">
-    <span class="label">Self-supervised learning · SUTD · Team of 4 · Apr 2026</span>
-    <h1>Snekboros: vision world models for Snake</h1>
-    <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
-    <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
-    <div class="plinks"><span class="muted">Final report available on request</span></div>
-  </header>
-  <article class="wu page">
-          <h4>The problem</h4>
+  <main id="main" class="sections">
+    <header class="page-head">
+      <p class="label">Self-supervised learning · SUTD · Team of 4 · Apr 2026</p>
+      <h1>Snekboros: vision world models for Snake</h1>
+      <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
+      <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
+      <div class="plinks"><span class="muted">Final report available on request</span></div>
+    </header>
+    <article class="wu" aria-label="Write-up">
+          <h2>The problem</h2>
           <p>Snake has simple rules, but one bad early move can trap the snake many steps later. That makes it a compact test of long-horizon planning, posed in OpenAI's 2018 Requests for Research. We made it harder: the agent sees only rendered pixels, never the grid state.</p>
           <p>We used a JEPA-style objective (joint-embedding predictive architecture). Instead of predicting future pixels, the model predicts future <em>representations</em>, which avoids modelling pixel detail that doesn't matter for decisions. The catch is a known failure mode: the encoder can map every frame to nearly the same vector, which makes prediction trivially easy and the representation useless. This is called representation collapse, and most of my work was about detecting and preventing it.</p>
 
-          <h4>How the team system works</h4>
-          <ol class="flow" aria-label="Team system pipeline">
+          <h2>How the team system works</h2>
+          <ol class="flow">
             <li><small>Input</small>Rendered frame</li>
             <li><small>Encoder</small>CNN → latent</li>
             <li><small>World model</small>Action-conditioned ConvGRU, rolled forward 15 steps</li>
@@ -36,20 +52,30 @@
             <li><small>Planner</small>Best of 1,024 imagined move sequences</li>
           </ol>
           <p>At each step the planner samples 1,024 candidate move sequences, rolls each one forward inside the world model, scores them with the evaluator, and plays the first move of the best. This is model-predictive control in a learned latent space. SIGReg, a regulariser that pushes representations towards an isotropic Gaussian, guards against collapse.</p>
+          <figure>
+        <ul class="hbars" style="--max:1">
+          <li><span class="lbl">Random policy</span><span class="track"><i style="--v:0"></i></span><b>0.00</b></li>
+          <li><span class="lbl">DINO-WM <small>frozen pretrained encoder</small></span><span class="track"><i style="--v:0"></i></span><b>0.00</b></li>
+          <li class="mine"><span class="lbl">Snekboros <small>team system</small></span><span class="track"><i style="--v:.89"></i></span><b>0.89</b></li>
+          <li><span class="lbl">Oracle planner <small>sees the true grid</small></span><span class="track"><i style="--v:1"></i></span><b>1.00</b></li>
+          <li><span class="lbl">Hamiltonian cycle <small>hand-designed</small></span><span class="track"><i style="--v:1"></i></span><b>1.00</b></li>
+        </ul>
+        <figcaption><b>Completion rate on a 4×4 board</b> (fraction of possible food eaten). Team result from the final report; single seed per row.</figcaption>
+      </figure>
 
-          <h4>What I contributed to the final system</h4>
+          <h2>What I contributed to the final system</h2>
           <ul>
             <li><strong>Collapse monitoring.</strong> I added effective-rank tracking on the centred representations as a per-epoch training signal. When the rank drops, the run stops instead of wasting epochs. The final paper uses it as the system's collapse monitor.</li>
             <li><strong>Phased training.</strong> Training all three components together from scratch was unstable and often collapsed within 10 epochs. I designed the schedule the paper uses: 20% of epochs on the encoder alone, 20% on the world model alone, then 60% jointly.</li>
             <li><strong>Experiment standard.</strong> Every ablation had to ship with saved results, diagnostics and a paired analysis notebook before it was reported. The paper's five ablation tables went through this pipeline.</li>
           </ul>
 
-          <h4>My own track: how close can a scratch-trained encoder get? (14×14 board)</h4>
+          <h2>My own track: how close can a scratch-trained encoder get? (14×14 board)</h2>
           <p>The team paper used a 4×4 board. In parallel I ran a study on a 14×14 board with transformer world models. At this size frames render at 224 px, which matches the input size of DINOv2, an encoder pretrained on ImageNet. That made a fair question possible: how close can an encoder trained from scratch on Snake get to a strong pretrained one?</p>
           <p>I measured this with a linear probe: a ridge regression from frozen embeddings to the snake head's (x, y) position. Frozen DINOv2 sets the ceiling at R² 0.927. Before running anything, I fixed a pass band of ±0.05 around that ceiling so the target couldn't move afterwards.</p>
           <figure>
-            <div class="chart-key"><span><i style="background:var(--chart-1)"></i>Scratch-trained JEPA encoder</span><span><i style="background:var(--band);outline:1px dashed var(--chart-1)"></i>Pre-registered pass band (±0.05)</span></div>
-            <ul class="hbars banded" style="--max:1;--b0:.877;--b1:.977" aria-label="Encoder probe R squared">
+            <div class="chart-key"><span><i class="key-mine"></i>Scratch-trained JEPA encoder</span><span><i class="key-band"></i>Pre-registered pass band (±0.05)</span></div>
+            <ul class="hbars banded" style="--max:1;--b0:.877;--b1:.977">
               <li class="mine"><span class="lbl">Strict-JEPA baseline</span><span class="track"><i style="--v:.436"></i></span><b>0.436</b></li>
               <li class="mine"><span class="lbl">+ asymmetric projector</span><span class="track"><i style="--v:.447"></i></span><b>0.447</b></li>
               <li class="mine"><span class="lbl">+ projector + VICReg</span><span class="track"><i style="--v:.622"></i></span><b>0.622</b></li>
@@ -63,23 +89,23 @@
             <li><strong>My own collapse alarm missed this.</strong> The effective-rank ratio stayed around 1.19 throughout, far above the 0.5 kill threshold. The embeddings still spanned many directions; they just encoded nothing useful. Rank tracking catches dimensional collapse but not informational collapse, so a probe has to be in the loop too.</li>
           </ul>
           <figure class="video-wrap">
-            <video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline width="224" height="224" aria-label="Snake moving around a 14 by 14 grid, growing as it eats green food"></video>
+            <video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline controls width="224" height="224"></video>
             <figcaption><b>A 14×14 rollout used to score the JEPA model.</b> A Hamiltonian-cycle oracle moves the snake while the model predicts each next step. The clip ends at the 300-step cap.</figcaption>
           </figure>
 
-          <h4>Alternatives considered: tuning on validation loss</h4>
+          <h2>Alternatives considered: tuning on validation loss</h2>
           <p>I first tuned the projector + VICReg recipe the usual way, with a 20-trial Optuna search minimising validation loss. Probing the trials told the opposite story: within the study, lower validation loss went with worse probe scores. The search's best trial scored R² 0.328, while a configuration found outside the search scored 0.622. The penalties left easy minima where representations looked well-behaved but encoded nothing. Since then I search on a downstream probe rather than training loss, and this finding fed into the team's move from VICReg to SIGReg.</p>
 
-          <h4>Limitations</h4>
+          <h2>Limitations</h2>
           <ul>
             <li>Every ablation row is a single seed, so there are no error bars.</li>
             <li>At 4×4, the DINO-WM baseline kept its pretrained encoder frozen. Fine-tuning it would have been a fairer comparison.</li>
             <li>My 14×14 track didn't reach the pre-registered band, and time ran out before it could go into the submitted paper.</li>
           </ul>
         </article>
-  <nav class="pager" aria-label="More write-ups"><span></span><a href="vuln-repair.html" style="text-align:right"><span>Next →</span>Repairing C vulnerabilities with small open LLMs</a></nav>
-  <footer><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
+    <nav class="pager" aria-label="More write-ups"><span></span><a class="next" href="vuln-repair.html"><span>Next →</span>Repairing C vulnerabilities with small open LLMs</a></nav>
+  </main>
+  <footer class="site-footer"><span>Celest (Ciel) Teng · Singapore</span><span>Updated Oct 2026</span></footer>
 </div>
-<script src="script.js"></script>
 </body>
 </html>
