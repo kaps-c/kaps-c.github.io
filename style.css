@@ -217,3 +217,45 @@ ul.points b{font-weight:600}
 .pager span{display:block;font-weight:400;font-size:13px;color:var(--muted)}
 .pager a{text-decoration:none}
 .pager a:hover span{color:var(--ink)}
+
+/* cards on a tinted page */
+:root{--page:#f3f5f7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0b0e11;--bg:#141920;--surface:#1b2129;--line:#2a313b}}
+:root[data-theme="dark"]{--page:#0b0e11;--bg:#141920;--surface:#1b2129;--line:#2a313b}
+body{background:var(--bg)}
+.jump{background:var(--bg)}
+.vplot .chance span{background:var(--page)}
+.project{background:var(--page);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px);margin-bottom:20px;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.project:first-of-type{padding-top:clamp(18px,3vw,28px)}
+.project .frame{background:var(--bg)}
+.project .frame.dark{background:#000;border-color:#000}
+.wu.page{background:var(--page);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3.5vw,32px)}
+.wu.page h4:first-child{margin-top:0}
+.wu.page th{background:var(--bg)}
+.wu.page .table-wrap{background:var(--bg)}
+.wu.page .media-frame{border-color:var(--line)}
+
+/* lesson note: plain text, aligned with the bullets */
+.lesson{margin:10px 0 0;padding:0 0 0 20px;background:none;border:0;font-size:inherit}
+.lesson b{font-weight:600}
+.lesson code{font-family:var(--mono);font-size:.85em;color:var(--ink)}
+
+/* vertical pipeline: never wraps mid-row */
+.flow.vertical{flex-direction:column;align-items:stretch;gap:22px;max-width:30rem}
+.flow.vertical li{margin-right:0;max-width:none}
+.flow.vertical li:not(:last-child)::after{content:"↓";right:auto;left:16px;top:auto;bottom:-20px;transform:none}
+
+/* architecture (container) diagram */
+.arch{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.5fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.arch-col{border:1px dashed var(--muted);border-radius:10px;padding:10px;display:grid;gap:8px;background:transparent}
+.arch-h{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.node{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--bg);font-size:14px;line-height:1.3}
+.node small{display:block;color:var(--muted);font-size:12px}
+.node.mine{border-color:var(--accent);background:var(--accent-soft)}
+.node.mine small{color:var(--accent)}
+.arch-arrow{color:var(--muted);font-size:18px;text-align:center}
+@media (max-width:640px){.arch{grid-template-columns:minmax(0,1fr)}.arch-arrow{transform:rotate(90deg)}}
+
+/* draft placeholder for a visual still to come */
+.frame.todo-visual{border-style:dashed;color:var(--muted);font-size:15px;text-align:center;padding:24px}
+.frame.todo-visual b{display:block;color:var(--ink);margin-bottom:4px}

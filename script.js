@@ -1,7 +1,11 @@
 const root=document.documentElement,btn=document.getElementById('theme-toggle');
 const current=()=>root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 const show=()=>{if(btn)btn.textContent=current()==='dark'?'Light mode':'Dark mode'};
-try{const s=localStorage.getItem('c-theme');if(s)root.dataset.theme=s}catch(e){}
+let picked=null;try{picked=localStorage.getItem('c-theme')}catch(e){}
+if(picked){root.dataset.theme=picked}
+else if(root.dataset.theme){try{sessionStorage.setItem('c-theme-host',root.dataset.theme)}catch(e){}}
+else{try{const h=sessionStorage.getItem('c-theme-host');if(h)root.dataset.theme=h}catch(e){}}
+new MutationObserver(()=>{let p=null;try{p=localStorage.getItem('c-theme')}catch(e){}if(!p&&root.dataset.theme){try{sessionStorage.setItem('c-theme-host',root.dataset.theme)}catch(e){}}show()}).observe(root,{attributes:true,attributeFilter:['data-theme']});
 show();
 if(btn)btn.addEventListener('click',()=>{const n=current()==='dark'?'light':'dark';root.dataset.theme=n;show();try{localStorage.setItem('c-theme',n)}catch(e){}});
 const links=[...document.querySelectorAll('.jump nav a[href^="#"]')];

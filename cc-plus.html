@@ -28,6 +28,13 @@
 
           <h4>How the system works</h4>
           <p>Feedback arrives from WhatsApp, online forms and on-site visits. A classification engine, built by my AI teammate, tags each message by aspect (product, service, delivery or payment), sentiment, and whether it needs action. Every week my summariser turns that feedback into a short digest for each aspect, shown on a web dashboard and an Android app.</p>
+          <figure><div class="arch" role="img" aria-label="CC+ architecture: feedback sources feed a Node.js API on Cloud Run, which runs a classification engine and my summariser worker, stores results in PostgreSQL, and serves a web dashboard and Android app.">
+<div class="arch-col"><span class="arch-h">Feedback in</span><div class="node">WhatsApp Business API</div><div class="node">Online forms <small>webhook</small></div><div class="node">Site visits <small>voice or manual entry</small></div></div>
+<div class="arch-arrow" aria-hidden="true">→</div>
+<div class="arch-col"><span class="arch-h">Platform · Google Cloud Run</span><div class="node">Node.js + Express API</div><div class="node">Classification engine <small>DistilBERT · teammate</small></div><div class="node mine">Summariser worker <small>Python subprocess → Claude API · my work</small></div><div class="node">PostgreSQL <small>weekly summaries cached</small></div><div class="node">Scheduled job <small>runs the weekly summary</small></div></div>
+<div class="arch-arrow" aria-hidden="true">→</div>
+<div class="arch-col"><span class="arch-h">Account managers</span><div class="node">React web dashboard</div><div class="node">Android app</div></div>
+</div><div class="flow-legend"><i></i>My work</div><figcaption><b>System overview.</b> Simplified; no client internals.</figcaption></figure>
 
           <h4>The summariser</h4>
           <ol>

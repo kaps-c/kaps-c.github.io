@@ -28,6 +28,7 @@
 
           <h4>How it works</h4>
           <p>Three signals feed a structured few-shot prompt. A fault-localisation model scores each line, a classifier predicts the vulnerability type, and dense retrieval finds similar past bugs along with their fixes. An open model (llama3:8b, deepseek-coder:6.7b or mistral:7b, served locally with Ollama) writes a patch. The patch only counts if it compiles under AddressSanitizer and the proof-of-concept exploit no longer triggers.</p>
+          <figure><ol class="flow vertical" aria-label="Repair pipeline"><li><small>1 · Input</small>Vulnerable C function</li><li><small>2 · Signals</small>Fault localisation and vulnerability classification</li><li class="mine"><small>3 · Signal · my work</small>Dense retrieval: 3 similar fixed bugs from 150k</li><li><small>4 · Generate</small>Structured few-shot prompt → open 7B LLM</li><li class="mine"><small>5 · Verify · my work</small>Apply patch → ASAN compile → run exploit → pass@k</li></ol><div class="flow-legend"><i></i>My work</div><figcaption><b>Repair pipeline.</b> A patch only counts if it compiles under AddressSanitizer and the exploit no longer triggers.</figcaption></figure>
 
           <h4>What I built</h4>
           <ul>
