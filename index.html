@@ -188,6 +188,11 @@ caption{caption-side:bottom;text-align:left;font-size:13px;color:var(--muted);pa
 .entry p{margin:4px 0 0}
 .entry ul{margin:6px 0 0;padding-left:20px;display:grid;gap:6px}
 
+.lesson{margin:10px 0 0;padding:10px 14px;border-left:3px solid var(--muted);background:var(--surface);border-radius:0 8px 8px 0;font-size:15px}
+.lesson b{font-weight:600}
+.lesson code{font-family:var(--mono);font-size:13px}
+.screens{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.screens img{width:120px;max-width:30%;height:auto;border:1px solid var(--line);border-radius:12px;display:block}
 dl.skills{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 16px;margin:0}
 dl.skills dt{font-weight:600}
 dl.skills dd{margin:0;color:var(--muted)}
@@ -589,6 +594,17 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
         <p>Forecasting Singapore public-housing resale prices with sequence models. I built the LSTM and the data preprocessing pipeline in PyTorch; teammates compared GRU and autoencoder models.</p>
       </li>
       <li>
+        <span class="t">PecPals: gamified fitness app for Android</span>
+        <span class="m">UI design · SUTD 50.001 · Team of 7</span>
+        <p>An Android app where you hatch and raise a pixel-art pet by completing workouts, aimed at helping women build a fitness habit. I designed the app's screens in Figma, from onboarding to workout tasks, the shop and the profile page.</p>
+        <div class="screens">
+          <img src="media/pecpals-home.webp" width="360" height="800" loading="lazy" alt="Home screen with a pixel-art pet and today's workout tasks.">
+          <img src="media/pecpals-task.webp" width="360" height="800" loading="lazy" alt="Workout screen for bicep curls with timer and weight controls.">
+          <img src="media/pecpals-profile.webp" width="360" height="800" loading="lazy" alt="Profile screen showing coins, XP and workout streak.">
+        </div>
+        <div class="plinks"><a href="https://github.com/aishwaryaiyer28/PecPals" target="_blank" rel="noopener">Code ↗</a></div>
+      </li>
+      <li>
         <span class="t">Hate speech classification</span>
         <span class="m">Project Leader, team of 5 · SUTD 50.007 · May – Aug 2024</span>
         <p>A classical baseline: TF-IDF features and Gaussian Naïve Bayes, tuned with 5-fold grid search. Accuracy was 0.66 but macro-F1 only 0.51, because recall on one class was 0.15, a clear sign of where a simple model breaks.</p>
@@ -608,6 +624,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
         <li>Explored learning from data labelled only per batch, not per bean (a multiple-instance learning setting): trained a CBOW-style model on batch contents and used its hidden layer as an embedding for individual beans, then tested whether those embeddings captured quality differences.</li>
         <li>Assisted a research-stage computer-vision project on image-based defect detection in individual specimens.</li>
       </ul>
+      <p class="lesson"><b>Lesson learned:</b> after the migration, training broke and it took days to find out why. I had left out <code>shuffle=True</code> on the training data loader, so the model saw the data in a fixed order every epoch. One flag fixed it, and the results matched the original models again. Now the data pipeline is the first thing I check.</p>
     </div>
     <div class="entry">
       <div class="entry-head"><b>Mission Math · Secondary Math &amp; Science Tutor</b><span class="when">May 2023 – Apr 2025</span></div>
