@@ -222,7 +222,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
     <div class="actions">
       <a class="btn primary" href="Celest-Teng-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
       <a class="btn" href="https://github.com/kaps-c" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="#">LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/in/celest-teng" target="_blank" rel="noopener">LinkedIn</a>
     </div>
     <div class="email"><span>Email</span><code id="mail">tengcelest@gmail.com</code><button id="copy-mail" type="button">Copy</button><span class="status" id="copy-status" role="status"></span></div>
   </header>
@@ -328,7 +328,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
         </ol>
         <div class="flow-legend"><i></i>My work</div>
       </figure>
-      <div class="plinks"><span class="muted">Code in a team organisation on GitHub</span></div>
+      <div class="plinks"><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
       <div class="stack">Python · PyTorch · CodeT5+ · FAISS · Ollama · AddressSanitizer · FastAPI</div>
 
       <details class="writeup">
@@ -601,11 +601,11 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
     <h2>Experience</h2>
     <div class="entry">
       <div class="entry-head"><b>ProfilePrint · Data Science / Computer Vision Intern</b><span class="when">May – Sep 2025</span></div>
-      <span class="sub">Food-tech startup, via SGInnovate's Summation Programme</span>
+      <span class="sub">AI ingredient-quality assessment platform for food companies · via SGInnovate's Summation Programme</span>
       <ul>
-        <li>Migrated and refactored legacy deep-learning models for coffee-quality prediction into modular PyTorch components, working with the data science team, and integrated hyperparameter tuning.</li>
+        <li>Migrated and refactored legacy deep-learning models for coffee-quality prediction into modular PyTorch components, matching the original models' performance, and integrated hyperparameter tuning.</li>
         <li>Compared internal pipelines for predicting non-visual defects end to end: data handling, model application, benchmarking, and presenting results to the team.</li>
-        <li>Worked with sparse industrial data labelled only at the batch level, not per sample, which called for weakly supervised methods.</li>
+        <li>Explored learning from data labelled only per batch, not per bean (a multiple-instance learning setting): trained a CBOW-style model on batch contents and used its hidden layer as an embedding for individual beans, then tested whether those embeddings captured quality differences.</li>
         <li>Assisted a research-stage computer-vision project on image-based defect detection in individual specimens.</li>
       </ul>
     </div>
@@ -630,7 +630,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);paddin
   <section id="skills">
     <h2>Skills</h2>
     <dl class="skills">
-      <dt>Languages</dt><dd>Python, SQL, JavaScript</dd>
+      <dt>Languages</dt><dd>Python, SQL, JavaScript, Java</dd>
       <dt>Machine learning</dt><dd>PyTorch, Hugging Face Transformers, scikit-learn, FAISS, Optuna, Ray Tune</dd>
       <dt>LLMs</dt><dd>Claude and OpenAI APIs, Ollama, retrieval, LLM-as-judge evaluation</dd>
       <dt>Engineering</dt><dd>Node.js, React, PostgreSQL, Google Cloud (Cloud Run, Cloud Build), Git, unit testing</dd>
