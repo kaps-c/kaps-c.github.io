@@ -36,7 +36,7 @@
       <h1>Snekboros: vision world models for Snake</h1>
       <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
       <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
-      <div class="plinks"><span class="muted">Final report available on request</span></div>
+      <div class="plinks"><a href="https://github.com/kaps-c/Vision-World-Models-Snake" target="_blank" rel="noopener">Code: 14×14 rewrite, in progress ↗</a><span class="muted">Final report available on request</span></div>
     </header>
     <article class="wu" aria-label="Write-up">
           <h2>The problem</h2>

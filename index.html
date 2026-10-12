@@ -63,7 +63,7 @@
         <p class="oneliner">An agent that sees only rendered frames, learns how the game evolves in a compact latent space, and plans by imagining futures before it moves.</p>
         <figure><div class="frame dark"><video src="media/snekboros-rollout-14x14.mp4" poster="media/snekboros-rollout-poster.png" autoplay muted loop playsinline controls width="224" height="224"></video></div><figcaption>A 14×14 rollout used to score my JEPA model. An oracle moves the snake; the model predicts each next step.</figcaption></figure>
         <ul class="points"><li><b>Problem</b><span>Plan long-horizon moves in Snake from raw pixels alone, without ever seeing the grid.</span></li><li><b>Approach</b><span>A JEPA-style world model predicts future representations instead of pixels, then plans by imagining 1,024 move sequences.</span></li><li><b>Result</b><span>Team: 0.89 completion on a 4×4 board (random 0.00, oracle 1.00). My 14×14 track: probe R² 0.436 → 0.622, against a 0.927 ceiling.</span></li><li><b>My role</b><span>Led the self-supervised track: collapse monitoring and phased training used in the final paper, plus my own 14×14 study.</span></li></ul>
-        <div class="plinks"><a class="read" href="snekboros.html">Read the write-up<span class="visually-hidden">: Snekboros: vision world models for Snake</span> →</a><span class="muted">Final report available on request</span></div>
+        <div class="plinks"><a class="read" href="snekboros.html">Read the write-up<span class="visually-hidden">: Snekboros: vision world models for Snake</span> →</a><a href="https://github.com/kaps-c/Vision-World-Models-Snake" target="_blank" rel="noopener">Code: 14×14 rewrite, in progress ↗</a><span class="muted">Final report available on request</span></div>
         <p class="stack">PyTorch · JEPA · SIGReg · VICReg · ConvGRU · ViT · Optuna</p>
       </article>
       <article class="project" id="vuln-repair">
@@ -106,7 +106,7 @@
         <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
         <figure><div class="frame white"><img src="media/nlp-attention-shallow-deep.webp" width="1632" height="660" loading="lazy" alt="Two attention heatmaps for the same English example: layer 0 is diffuse, layer 11 concentrates on early and content tokens."></div><figcaption>Attention in layer 0 (left) and layer 11 (right) for one English example.</figcaption></figure>
         <ul class="points"><li><b>Problem</b><span>How well does an English-trained GPT-2 handle 14 other languages, and what predicts how well it does?</span></li><li><b>Approach</b><span>Zero-shot tests on 15 XNLI languages, tokenizer fertility analysis, then per-language vs unified fine-tuning.</span></li><li><b>Result</b><span>Fertility predicts zero-shot accuracy (Spearman −0.818). Fine-tuning added 18–25 points.</span></li><li><b>My role</b><span>Ran the multilingual study and all of the extended analysis. Implementing GPT-2 was group work.</span></li></ul>
-        <div class="plinks"><a class="read" href="multilingual-gpt2.html">Read the write-up<span class="visually-hidden">: How far does English GPT-2 transfer? Multilingual NLI</span> →</a><span class="muted">Repository coming soon</span></div>
+        <div class="plinks"><a class="read" href="multilingual-gpt2.html">Read the write-up<span class="visually-hidden">: How far does English GPT-2 transfer? Multilingual NLI</span> →</a><a href="https://github.com/kaps-c/Multilingual-GPT2-NLI" target="_blank" rel="noopener">Code ↗</a></div>
         <p class="stack">PyTorch · GPT-2 · XNLI · scikit-learn</p>
       </article>
 
@@ -116,12 +116,12 @@
         <span class="t">Music recommendation from mood prompts</span>
         <span class="m">Project Leader · SUTD · Feb – Apr 2025</span>
         <p>Turns a free-text request, such as a mood or genre, into a target set of audio features, matches it against clusters of the listener's recent tracks, and builds a Spotify playlist.</p>
-        <div class="plinks"><a href="https://github.com/kaps-c/Music-Recommendation-Using-Prompts" target="_blank" rel="noopener">Code ↗</a></div>
       </li>
       <li>
         <span class="t">HDB resale price prediction</span>
         <span class="m">Project Leader, team of 3 · SUTD · Feb – Apr 2025</span>
-        <p>Forecasting Singapore public-housing resale prices with sequence models. I built the LSTM and the data preprocessing pipeline in PyTorch; teammates compared GRU and autoencoder models.</p>
+        <p>Predicting Singapore public-housing resale prices. In the team project I built the LSTM and the data preprocessing in PyTorch. I later rebuilt it as a reproducible case study with a chronological split: on 5,414 sales from early 2025, an MLP reached a test MAE of S$32,090 (R² 0.948), while the original LSTM idea came in weaker (R² 0.605). One split and one seed.</p>
+        <div class="plinks"><a href="https://github.com/kaps-c/HDB-Resale-Price-Prediction" target="_blank" rel="noopener">Code ↗</a></div>
       </li>
       <li>
         <span class="t">PecPals: gamified fitness app for Android</span>
@@ -137,8 +137,8 @@
       <li>
         <span class="t">Hate speech classification</span>
         <span class="m">Project Leader, team of 5 · SUTD 50.007 · May – Aug 2024</span>
-        <p>A classical baseline: TF-IDF features and Gaussian Naïve Bayes, tuned with 5-fold grid search. Accuracy was 0.66 but macro-F1 only 0.51, because recall on one class was 0.15, a clear sign of where a simple model breaks.</p>
-        <div class="plinks"><a href="https://github.com/kaps-c/50.007-Hate-Speech-Classification" target="_blank" rel="noopener">Code ↗</a></div>
+        <p>A classical baseline: TF-IDF features and Gaussian Naïve Bayes, tuned for macro-F1, rebuilt on the public Davidson et al. dataset because the original course data is unavailable. On 4,954 held-out posts it catches half the hate speech, with macro-F1 0.69 against 0.49 for always predicting non-hate, but most of its flags are false positives. A baseline, not a moderation system.</p>
+        <div class="plinks"><a href="https://github.com/kaps-c/Hate-Speech-Classification" target="_blank" rel="noopener">Code ↗</a></div>
       </li>
     </ul>
     </section>

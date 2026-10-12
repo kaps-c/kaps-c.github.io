@@ -36,7 +36,7 @@
       <h1>How far does English GPT-2 transfer? Multilingual NLI</h1>
       <p class="oneliner">Our group implemented GPT-2 and fine-tuned it for natural language inference in English. I tested how well that transfers to 14 other languages, and what predicts the result.</p>
       <ul class="points"><li><b>Problem</b><span>How well does an English-trained GPT-2 handle 14 other languages, and what predicts how well it does?</span></li><li><b>Approach</b><span>Zero-shot tests on 15 XNLI languages, tokenizer fertility analysis, then per-language vs unified fine-tuning.</span></li><li><b>Result</b><span>Fertility predicts zero-shot accuracy (Spearman −0.818). Fine-tuning added 18–25 points.</span></li><li><b>My role</b><span>Ran the multilingual study and all of the extended analysis. Implementing GPT-2 was group work.</span></li></ul>
-      <div class="plinks"><span class="muted">Repository coming soon</span></div>
+      <div class="plinks"><a href="https://github.com/kaps-c/Multilingual-GPT2-NLI" target="_blank" rel="noopener">Code ↗</a></div>
     </header>
     <article class="wu" aria-label="Write-up">
           <h2>Setup</h2>
@@ -133,7 +133,7 @@
           <ul>
             <li>A pragmatic-inference probe looked fine on accuracy (0.76), but its macro-F1 was 0.47 because it almost always predicted "contradiction". Accuracy alone would have hidden this.</li>
             <li>The tone probe didn't transfer across languages: 97.7% in English but 25.0%, chance level, in Chinese.</li>
-            <li>The per-language numbers are best-checkpoint accuracies from the original notebook. The cleaned re-run will report every model on the same test split.</li>
+            <li>The numbers on this page come from the original course notebook; the per-language ones are best-checkpoint accuracies. The repository reconstructs the code, but full-data re-runs are still pending, so it reports smaller subset runs separately.</li>
           </ul>
         </article>
     <nav class="pager" aria-label="More write-ups"><a href="cc-plus.html"><span>← Previous</span>CC+: AI summaries of customer feedback</a><a class="next" href="./#projects"><span>Back to</span>All projects</a></nav>
