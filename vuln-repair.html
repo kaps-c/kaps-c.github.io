@@ -82,6 +82,18 @@
             <li><strong>Sampling matters for small models.</strong> Near-greedy Pass@1 sat at 0–1.9%. Sampling five candidates lifted the best result to 15.4%.</li>
           </ul>
 
+          <figure><div class="frame term-frame"><div class="term"><p class="term-bar">Defects4C run · llama3:8b · location + type signals · log excerpt</p><pre tabindex="0"><code><span class="t-dim">[27/52]</span> redis/hiredis · CVE-2021-32765
+
+<span class="t-dim">classification</span>  Memory Error (1.00)
+                Uncontrolled Resource Consumption (0.88)
+<span class="t-dim">localisation</span>    no line above 0.20, fell back to top 5
+
+<span class="t-dim">patch</span>
+<span class="t-del">- r-&gt;element = hi_calloc(elements,sizeof(redisReply*));</span>
+<span class="t-add">+ r-&gt;element = calloc(elements, sizeof(redisReply *));</span>
+
+<span class="t-dim">Compile :</span> <span class="t-add">True</span>
+<span class="t-dim">Fixed   :</span> <span class="t-add">True</span></code></pre></div></div><figcaption><b>One of the 8 fixed cases.</b> The localisation model found no line above its threshold here, but the classification signal pointed at a memory error and the model fixed the allocation.</figcaption></figure>
           <h2>What I'd change</h2>
           <ul>
             <li>Judge a component on the end task, not in isolation. Retrieval met every one of its own targets and still made the pipeline worse. Next I'd only inject examples above a similarity threshold.</li>

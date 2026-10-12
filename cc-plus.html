@@ -59,6 +59,15 @@
             <li>Send the signals and raw messages to Claude with a fixed, structured prompt (temperature 0) that requires five sections.</li>
             <li>Parse the response, store it in PostgreSQL, and serve the cached copy on page load.</li>
           </ol>
+          <figure><div class="frame digest-frame"><div class="digest">
+<div class="digest-head"><b>AI-generated improvement summary</b><span class="tag">Example · fictional data</span></div>
+<p class="digest-overall">Feedback this week was mixed: delivery timing drew the most concern, while product quality and payment were positive.</p>
+<div class="digest-grid">
+<div class="aspect"><div class="aspect-top"><b>Product</b><span class="aspect-s">Sentiment<span class="badge pos">Positive</span></span></div><p>Customers praised the consistency of recent batches. One asked about lead times for a larger size.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Service</b><span class="aspect-s">Sentiment<span class="badge neu">Neutral</span></span></div><p>Two quotation enquiries were answered within a day. No complaints were recorded.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Delivery</b><span class="aspect-s">Sentiment<span class="badge neg">Negative</span></span></div><p>Several site managers reported late deliveries, including one that delayed a scheduled installation.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Payment</b><span class="aspect-s">Sentiment<span class="badge none">None</span></span></div><p>No feedback recorded this week.</p></div>
+</div></div></div><figcaption><b>Example output.</b> Recreated with fictional feedback because of the NDA. The layout matches the production dashboard component.</figcaption></figure>
           <ul>
             <li><strong>Process isolation.</strong> The Node.js backend runs the Python worker as a separate process, so several hundred MB of model weights never sit in the web server and a model crash can't take the API down.</li>
             <li><strong>Caching and fallback.</strong> A scheduled job writes each week's summary once. Pages load the stored copy in under 5 seconds without calling the model. If the current week has no feedback, the dashboard shows the last non-empty week, clearly labelled as older.</li>

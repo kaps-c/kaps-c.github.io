@@ -69,7 +69,18 @@
       <article class="project" id="vuln-repair">
         <div><h3>Repairing C vulnerabilities with small open LLMs</h3><p class="card-meta">SUTD · Team of 5 · Apr 2026</p></div>
         <p class="oneliner">Given only a vulnerable C function, generate a patch with a 7B model, then verify it by compiling with AddressSanitizer and re-running the exploit.</p>
-        <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>A short screen recording of the harness fixing one CVE: patch generated, ASAN compile passes, exploit no longer fires.</p></div><figcaption>Placeholder for a recording of the pipeline running.</figcaption></figure>
+        <figure><div class="frame term-frame"><div class="term"><p class="term-bar">Defects4C run · llama3:8b · location + type signals · log excerpt</p><pre tabindex="0"><code><span class="t-dim">[27/52]</span> redis/hiredis · CVE-2021-32765
+
+<span class="t-dim">classification</span>  Memory Error (1.00)
+                Uncontrolled Resource Consumption (0.88)
+<span class="t-dim">localisation</span>    no line above 0.20, fell back to top 5
+
+<span class="t-dim">patch</span>
+<span class="t-del">- r-&gt;element = hi_calloc(elements,sizeof(redisReply*));</span>
+<span class="t-add">+ r-&gt;element = calloc(elements, sizeof(redisReply *));</span>
+
+<span class="t-dim">Compile :</span> <span class="t-add">True</span>
+<span class="t-dim">Fixed   :</span> <span class="t-add">True</span></code></pre></div></div><figcaption>A real case, excerpted from the Defects4C run log: llama3:8b patched CVE-2021-32765 in hiredis, and the harness marked it compiled and fixed.</figcaption></figure>
         <ul class="points"><li><b>Problem</b><span>Can small open 7B models fix real C vulnerabilities given only the function, with no crash logs and no known bug location?</span></li><li><b>Approach</b><span>Three ML signals feed a few-shot prompt; each patch must compile under AddressSanitizer and stop the exploit.</span></li><li><b>Result</b><span>15.4% of 52 real CVEs fixed (Pass@5, llama3:8b). Adding retrieval lowered compile rates for every model.</span></li><li><b>My role</b><span>Built the retrieval module (CodeT5+ and FAISS, under 5 ms per query) and the full evaluation harness, and designed the ablations.</span></li></ul>
         <div class="plinks"><a class="read" href="vuln-repair.html">Read the write-up<span class="visually-hidden">: Repairing C vulnerabilities with small open LLMs</span> →</a><a href="https://github.com/AIgroupwork25/ai-proj-model-guide" target="_blank" rel="noopener">Code ↗</a></div>
         <p class="stack">Python · PyTorch · CodeT5+ · FAISS · Ollama · AddressSanitizer</p>
@@ -77,7 +88,15 @@
       <article class="project" id="cc-plus">
         <div><h3>CC+: AI summaries of customer feedback</h3><p class="card-meta">SUTD Capstone with an industry partner · Team of 7 · Oct 2025 – Apr 2026</p></div>
         <p class="oneliner">A feedback platform for a B2B construction-supply company in Singapore. It collects WhatsApp and form feedback, classifies it, and writes a weekly digest for account managers.</p>
-        <figure><div class="frame todo-visual"><p><b>Draft: visual to add</b>An example weekly digest with fictional data, if the NDA allows. Otherwise this card goes without a visual.</p></div><figcaption>Built under an NDA, so no code, real data or screenshots are shown.</figcaption></figure>
+        <figure><div class="frame digest-frame"><div class="digest">
+<div class="digest-head"><b>AI-generated improvement summary</b><span class="tag">Example · fictional data</span></div>
+<p class="digest-overall">Feedback this week was mixed: delivery timing drew the most concern, while product quality and payment were positive.</p>
+<div class="digest-grid">
+<div class="aspect"><div class="aspect-top"><b>Product</b><span class="aspect-s">Sentiment<span class="badge pos">Positive</span></span></div><p>Customers praised the consistency of recent batches. One asked about lead times for a larger size.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Service</b><span class="aspect-s">Sentiment<span class="badge neu">Neutral</span></span></div><p>Two quotation enquiries were answered within a day. No complaints were recorded.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Delivery</b><span class="aspect-s">Sentiment<span class="badge neg">Negative</span></span></div><p>Several site managers reported late deliveries, including one that delayed a scheduled installation.</p></div>
+<div class="aspect"><div class="aspect-top"><b>Payment</b><span class="aspect-s">Sentiment<span class="badge none">None</span></span></div><p>No feedback recorded this week.</p></div>
+</div></div></div><figcaption>Recreated with fictional feedback because of the NDA. The layout matches the production dashboard component.</figcaption></figure>
         <ul class="points"><li><b>Problem</b><span>Customer feedback lived in WhatsApp threads and people&#x27;s heads, so problems went unnoticed until they cost a project.</span></li><li><b>Approach</b><span>Classify each message, then summarise the week per aspect with Claude, grounded in the classification signals.</span></li><li><b>Result</b><span>Deployed and handed over to the industry partner in April 2026. Cached weekly summaries load in under 5 seconds.</span></li><li><b>My role</b><span>Owned the summariser from research to production, set up CI/CD, and wrote all 13 handover documents.</span></li></ul>
         <div class="plinks"><a class="read" href="cc-plus.html">Read the write-up<span class="visually-hidden">: CC+: AI summaries of customer feedback</span> →</a><span class="muted">Under NDA, so no public code</span></div>
         <p class="stack">Python · Claude API · Hugging Face · Node.js · React · PostgreSQL · GCP</p>
